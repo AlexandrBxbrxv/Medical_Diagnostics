@@ -56,3 +56,22 @@ class Analysis(models.Model):
         verbose_name = 'анализ'
         verbose_name_plural = 'анализы'
         ordering = ('price',)
+
+
+class Result(models.Model):
+    """Модель результата анализа или диагноза на приеме."""
+    title = models.CharField(max_length=200, verbose_name='название')
+
+    analysis = models.ForeignKey(Analysis, on_delete=models.SET_NULL, **NULLABLE, related_name='results_analysis',
+                                 verbose_name='анализ')
+    appointment = models.ForeignKey(Appointment, on_delete=models.SET_NULL, **NULLABLE,
+                                    related_name='results_appointment', verbose_name='прием')
+
+    message = models.TextField(help_text='Результат анализа или диагноз приема', verbose_name='сообщение')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'результат'
+        verbose_name_plural = 'результаты'
