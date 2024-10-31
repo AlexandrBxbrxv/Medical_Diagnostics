@@ -29,6 +29,5 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
-        class Meta:
-            verbose_name = 'пользователь'
-            verbose_name_plural = 'пользователи'
+        verbose_name = 'пользователь'
+        verbose_name_plural = 'пользователи'
