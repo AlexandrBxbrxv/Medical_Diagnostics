@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
-NULLABLE = {'blank': True, 'null': True}
+from main.models import NULLABLE
 
 phone_validation = RegexValidator(
     regex=r'^(?:\+7|8)\d{10}$',  # Проверка для российских номеров телефона
