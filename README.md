@@ -7,6 +7,10 @@
 
 ###### DevBlog
 
+`v.0.1`
+1. Добавлены приложения main, services
+2. Добавлены Модели Doctor, Appointment, Analysis, Result
+
 `v.0`
 1. Установлены библиотеки Django, python-dotenv, psycopg2, Pillow, flake8
 2. Все чувствительные данные засекречены
