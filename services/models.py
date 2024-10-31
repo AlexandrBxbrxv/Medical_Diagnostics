@@ -46,6 +46,9 @@ class Analysis(models.Model):
     description = models.TextField(verbose_name='описание')
     preparation = models.TextField(verbose_name='подготовка')
 
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, **NULLABLE, related_name='analyses_doctor',
+                               verbose_name='врач')
+
     treatment_room = models.PositiveSmallIntegerField(verbose_name='процедурный кабинет')
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
