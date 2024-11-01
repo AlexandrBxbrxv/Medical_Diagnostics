@@ -7,6 +7,9 @@
 
 ###### DevBlog
 
+`v.0.2`
+1. Добавлена главная страница
+
 `v.0.1`
 1. Добавлены приложения main, services
 2. Добавлены модели Doctor, Appointment, Analysis, Result
