@@ -1,4 +1,6 @@
+from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -33,3 +35,15 @@ class UserRegister(CreateView):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Регистрация'
         return context_data
+
+
+def email_verification(request, token):
+    """Находит пользователя по токену из ссылки, выдает группу user и активирует пользователя."""
+    user = get_object_or_404(User, token=token)
+
+    user_group = Group.objects.get(name='user')
+    user_group.user_set.add(user)
+
+    user.is_active = True
+    user.save()
+    return redirect('users:login')
