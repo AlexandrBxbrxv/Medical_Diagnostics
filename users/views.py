@@ -3,9 +3,9 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 
-from users.forms import UserLoginForm, UserRegisterForm
+from users.forms import UserLoginForm, UserRegisterForm, UserProfileUpdateForm
 from users.models import User
 from users.services import send_email_verification
 
@@ -60,4 +60,18 @@ class UserProfile(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Профиль'
+        return context
+
+
+class UserProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserProfileUpdateForm
+    success_url = reverse_lazy('users:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Редактирование профиля'
         return context
