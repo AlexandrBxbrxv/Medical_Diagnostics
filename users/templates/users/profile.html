@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container col-6">
+  <div class="card mt-5">
+    {% if object.fullname %}
+    <div class="card-header">
+      <h4>{{ object.fullname }}</h4>
+    </div>
+    {% endif %}
+    <div class="card-body">
+      {{ object.email }}
+    </div>
+    <div class="card-footer">
+      <div class="row col-12">
+        <div class="col-6 p-1">
+          <a class="btn btn-outline-success col-12" href="{% url 'users:profile_update' %}">Редактировать профиль</a>
+        </div>
+        <div class="col-6 p-1">
+          <a class="btn btn-outline-secondary col-12" href="{% url 'main:index' %}">На главную</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
