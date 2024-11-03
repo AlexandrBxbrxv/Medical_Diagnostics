@@ -6,12 +6,9 @@ from config.settings import EMAIL_HOST_USER
 
 
 def send_email_verification(self, user):
-    """Присваивает пользователю токен и группу user, отправляет письмо со ссылкой на завершение регистрации."""
+    """Присваивает пользователю токен и отправляет письмо со ссылкой на завершение регистрации."""
     token = secrets.token_hex(16)
     user.token = token
-
-    user_group = Group.objects.get(name='user')
-    user_group.user_set.add(user)
 
     user.save()
 
