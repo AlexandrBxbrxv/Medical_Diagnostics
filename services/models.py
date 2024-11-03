@@ -9,6 +9,8 @@ class Doctor(models.Model):
     speciality = models.CharField(max_length=200, verbose_name='специальность')
     education = models.TextField(verbose_name='образование')
     information = models.TextField(**NULLABLE, verbose_name='общая информация')
+    avatar = models.ImageField(upload_to='services/avatars', default='avatar_placeholder.jpg', **NULLABLE,
+                               verbose_name='аватар')
 
     experience = models.PositiveSmallIntegerField(verbose_name='стаж')
 
