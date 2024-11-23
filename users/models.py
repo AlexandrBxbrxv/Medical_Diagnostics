@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
 from main.models import NULLABLE
+from services.models import Analysis, Appointment
 
 phone_validation = RegexValidator(
     regex=r'^(?:\+7|8)\d{10}$',  # Проверка для российских номеров телефона
@@ -32,3 +33,17 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
+
+
+class Cart(models.Model):
+    """Модель корзины для набора анализов и приемов для последующей оплаты."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='carts_owner',
+                              verbose_name='владелец')
+    analyses = models.ManyToManyField(Analysis, related_name='carts_analyses', verbose_name='анализы')
+    appointments = models.ManyToManyField(Appointment, related_name='carts_appointments',
+                                          verbose_name='записи на прием')
+    summ = models.PositiveIntegerField(default=0, verbose_name='сумма к оплате')
+
+    class Meta:
+        verbose_name = 'козина'
+        verbose_name_plural = 'корзины'
