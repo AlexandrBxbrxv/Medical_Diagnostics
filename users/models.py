@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
 from main.models import NULLABLE
-from services.models import Analysis, Appointment
+from services.models import Analysis, Appointment, Result
 
 phone_validation = RegexValidator(
     regex=r'^(?:\+7|8)\d{10}$',  # Проверка для российских номеров телефона
@@ -47,3 +47,17 @@ class Cart(models.Model):
     class Meta:
         verbose_name = 'козина'
         verbose_name_plural = 'корзины'
+
+
+class History(models.Model):
+    """Модель истории для записи всех оплаченных услуг и результатов."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='histories_owner',
+                              verbose_name='владелец')
+    analyses = models.ManyToManyField(Analysis, related_name='histories_analyses', verbose_name='анализы')
+    appointments = models.ManyToManyField(Appointment, related_name='histories_appointments',
+                                          verbose_name='записи на прием')
+    results = models.ManyToManyField(Result, related_name='histories_results', verbose_name='результаты')
+
+    class Meta:
+        verbose_name = 'история'
+        verbose_name_plural = 'истории'
