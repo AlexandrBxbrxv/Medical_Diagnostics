@@ -11,7 +11,7 @@
   {% for object in object_list %}
   <div class="col-2">
     <div class="card text-center mt-3">
-      <div class="card-header p-0">
+      <div class="card-header p-0" style="height:45px">
         <a href="{% url 'services:doctor_detail' object.pk %}">
           <h6>{{ object.fullname|truncatechars:40 }}</h6>
         </a>

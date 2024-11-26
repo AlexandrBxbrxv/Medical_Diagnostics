@@ -7,15 +7,15 @@
     <img src="{{ object.avatar | media_filter }}" style="width: 26rem; height: 26rem;" border="1px solid #555">
     <div class="col-12">
       <div class="col-12 mt-2">
-        <a class="btn btn-primary col-12" href="{% url 'services:doctor_list' %}">К списку врачей</a>
+        <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_list' %}">К списку врачей</a>
       </div>
       {% if perms.services.change_doctor and perms.services.delete_doctor %}
       <div class="row p-2">
         <div class="col-6 p-1">
-          <a class="btn btn-primary col-12" href="{% url 'services:doctor_update' object.pk %}">Изменить</a>
+          <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_update' object.pk %}">Изменить</a>
         </div>
         <div class="col-6 p-1">
-          <a class="btn btn-primary col-12" href="{% url 'services:doctor_delete' object.pk %}">Удалить</a>
+          <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_delete' object.pk %}">Удалить</a>
         </div>
       </div>
       {% endif %}
