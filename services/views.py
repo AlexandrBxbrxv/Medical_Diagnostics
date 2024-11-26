@@ -83,7 +83,7 @@ class DoctorUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         raise PermissionDenied
 
     def get_success_url(self):
-        return reverse('service:doctor_detail', args=[self.kwargs.get('pk')])
+        return reverse('services:doctor_detail', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
