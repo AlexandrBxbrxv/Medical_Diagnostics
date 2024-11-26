@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="card mt-4">
+      <div class="card-header">
+        <h6>{{ object.fullname }}</h6>
+      </div>
+      <div class="card-body" style="height:50px">
+        <p>{{ object.speciality }}</p>
+      </div>
+      <div class="card-footer">
+         <div class="row col-12">
+        <div class="col-6 p-1">
+          <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger col-12">Удалить</button>
+          </form>
+        </div>
+            <div class="col-6 p-1">
+            <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_list' %}">К списку врачей</a>
+          </div>
+      </div>
+    </div>
+{% endblock %}
