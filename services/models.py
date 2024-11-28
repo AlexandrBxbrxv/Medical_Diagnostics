@@ -1,10 +1,15 @@
 from django.db import models
 
 from main.models import NULLABLE
+from config.settings import AUTH_USER_MODEL
+
+User = AUTH_USER_MODEL
 
 
 class Doctor(models.Model):
     """Модель врача, врач не является пользователем сайта."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='doctors_owner',
+                              verbose_name='владелец')
     fullname = models.CharField(max_length=150, verbose_name='Ф.И.О.')
     speciality = models.CharField(max_length=200, verbose_name='специальность')
     education = models.TextField(verbose_name='образование')
@@ -23,13 +28,16 @@ class Doctor(models.Model):
 
 
 class Appointment(models.Model):
-    """Модель записи на приём ко врачу."""
+    """Модель записи на прием ко врачу."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='appointments_owner',
+                              verbose_name='владелец')
     title = models.CharField(max_length=200, verbose_name='название')
     description = models.TextField(verbose_name='описание')
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, **NULLABLE, related_name='appointments_doctor',
                                verbose_name='врач')
 
+    date_time = models.DateTimeField(**NULLABLE, verbose_name='дата и время приема')
     treatment_room = models.PositiveSmallIntegerField(verbose_name='процедурный кабинет')
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
@@ -44,13 +52,16 @@ class Appointment(models.Model):
 
 class Analysis(models.Model):
     """Модель анализа."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='analyses_owner',
+                              verbose_name='владелец')
     title = models.CharField(max_length=200, verbose_name='название')
     description = models.TextField(verbose_name='описание')
-    preparation = models.TextField(verbose_name='подготовка')
+    preparation = models.TextField(default='Особой подготовки не требуется.', verbose_name='подготовка')
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, **NULLABLE, related_name='analyses_doctor',
                                verbose_name='врач')
 
+    date_time = models.DateTimeField(**NULLABLE, verbose_name='дата и время приема')
     treatment_room = models.PositiveSmallIntegerField(verbose_name='процедурный кабинет')
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
@@ -65,6 +76,8 @@ class Analysis(models.Model):
 
 class Result(models.Model):
     """Модель результата анализа или диагноза на приеме."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='results_owner',
+                              verbose_name='владелец')
     title = models.CharField(max_length=200, verbose_name='название')
 
     analysis = models.ForeignKey(Analysis, on_delete=models.SET_NULL, **NULLABLE, related_name='results_analysis',

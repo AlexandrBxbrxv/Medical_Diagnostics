@@ -11,6 +11,7 @@ from users.services import send_email_verification
 
 
 class UserLoginView(LoginView):
+    """Контроллер для логина пользователя."""
     template_name = 'users/login.html'
     form_class = UserLoginForm
 
@@ -21,6 +22,7 @@ class UserLoginView(LoginView):
 
 
 class UserRegister(CreateView):
+    """Контроллер для регистрации пользователя."""
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('main:index')
@@ -51,6 +53,7 @@ def email_verification(request, token):
 
 
 class UserProfile(LoginRequiredMixin, DetailView):
+    """Контроллер просмотра профиля пользователя."""
     model = User
     template_name = 'users/profile.html'
 
@@ -64,6 +67,7 @@ class UserProfile(LoginRequiredMixin, DetailView):
 
 
 class UserProfileUpdate(LoginRequiredMixin, UpdateView):
+    """Контроллер редактирования профиля пользователя."""
     model = User
     form_class = UserProfileUpdateForm
     success_url = reverse_lazy('users:profile')

@@ -1,6 +1,5 @@
 import secrets
 
-from django.contrib.auth.models import Group
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
 

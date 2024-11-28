@@ -1,0 +1,53 @@
+{% extends 'main/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<div class="row">
+  <div class="col-4">
+    <img src="{{ object.avatar | media_filter }}" style="width: 26rem; height: 26rem;" border="1px solid #555">
+    <div class="col-12">
+      <div class="col-12 mt-2">
+        <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_list' %}">К списку врачей</a>
+      </div>
+      {% if perms.services.change_doctor and perms.services.delete_doctor %}
+      <div class="row p-2">
+        <div class="col-6 p-1">
+          <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_update' object.pk %}">Изменить</a>
+        </div>
+        <div class="col-6 p-1">
+          <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_delete' object.pk %}">Удалить</a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-8">
+    <h4>{{ object.fullname }}</h4>
+    <hr>
+    <h6>Специальность</h6>
+    <p>
+      {{ object.speciality }}
+    </p>
+    <hr>
+    <h6>Образование</h6>
+    <p>
+      {{ object.education }}
+    </p>
+    <hr>
+    <h6>Стаж работы</h6>
+    <p>
+      {{ object.experience|years_declination_filter }}
+    </p>
+    <hr>
+    {% if object.information %}
+    <h6>Дополнительная информация</h6>
+    <p>
+      {{ object.information }}
+    </p>
+    <hr>
+    {% endif %}
+  </div>
+</div>
+
+
+{% endblock %}

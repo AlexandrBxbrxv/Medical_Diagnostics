@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+{% if perms.services.add_doctor %}
+<div class="container p-0">
+  <a class="btn btn-primary" href="{% url 'services:doctor_create' %}">Добавить Врача</a>
+</div>
+{% endif %}
+<div class="row">
+  {% for object in object_list %}
+  <div class="col-2">
+    <div class="card text-center mt-3">
+      <div class="card-header p-0" style="height:45px">
+        <a href="{% url 'services:doctor_detail' object.pk %}">
+          <h6>{{ object.fullname|truncatechars:40 }}</h6>
+        </a>
+      </div>
+      <div class="card-body" style="height:255px">
+        <img src="{{ object.avatar | media_filter }}" style="width: 10rem; height: 10rem;" border="1px solid #555">
+        <h6>Специальность:</h6>
+        <p>{{ object.speciality|truncatechars:30 }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
