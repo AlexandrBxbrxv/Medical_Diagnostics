@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="col-12">
+  <div class="card mt-5">
+    <div class="card-header">
+      Прием
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      <div class="card-body">
+        {% csrf_token %}
+        {{ form.as_p }}
+      </div>
+      <div class="card-footer">
+        <div class="row col-4">
+          {% if object %}
+            <div class="col-6 p-1">
+              <button class="btn btn-outline-success col-12">Сохранить</button>
+            </div>
+          {% else %}
+            <div class="col-6 p-1">
+              <button class="btn btn-outline-success col-12">Создать</button>
+            </div>
+          {% endif %}
+          <div class="col-6 p-1">
+            <a class="btn btn-outline-primary col-12" href="{% url 'services:doctor_list' %}">К списку приемов</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

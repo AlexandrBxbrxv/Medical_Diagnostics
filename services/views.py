@@ -3,8 +3,8 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from services.forms import DoctorModelForm
-from services.models import Doctor
+from services.forms import DoctorModelForm, AppointmentModelForm
+from services.models import Doctor, Appointment
 
 
 # CRUD для модели Doctor ############################################
@@ -120,4 +120,25 @@ class DoctorDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Удаление врача'
+        return context_data
+
+
+# CRUD для Appointment ##############################################
+class AppointmentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    """Контроллер для создания объекта модели Appointment."""
+    model = Appointment
+    form_class = AppointmentModelForm
+    permission_required = 'services.add_appointment'
+    success_url = reverse_lazy('services:appointment_create')
+
+    def form_valid(self, form):
+        doctor = form.save()
+        user = self.request.user
+        doctor.owner = user
+        doctor.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Добавление записи на прием'
         return context_data
