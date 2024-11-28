@@ -5,8 +5,8 @@ from main.utils_for_tests import create_groups_for_test, create_users_for_tests,
 from services.models import Doctor
 
 
-class PermissionTestCase(TestCase):
-    """Тестирование доступов к контроллерам."""
+class PermissionForDoctorTestCase(TestCase):
+    """Тестирование доступов к контроллерам модели Doctor."""
 
     def reset_sequence(self):
         with connection.cursor() as cursor:
