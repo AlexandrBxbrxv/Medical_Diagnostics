@@ -41,7 +41,7 @@ def create_groups_for_test() -> tuple:
     return user_group, medical_staff_group
 
 
-def create_users_for_tests(user_group, medical_staff_group) -> tuple:
+def create_users_for_tests(user_group: Group, medical_staff_group: Group) -> tuple:
     """Создает пользователей и добавляет им группы, функция принимает 2 группы.
      Возвращает: user, other_user, medical_staff, other_medical_staff"""
     user = User.objects.create(
@@ -81,3 +81,24 @@ def create_users_for_tests(user_group, medical_staff_group) -> tuple:
     other_medical_staff.save()
 
     return user, other_user, medical_staff, other_medical_staff
+
+
+def create_doctors_for_tests(medical_staff: User, other_medical_staff: User) -> tuple:
+    """Создает 2 объекта модели Doctor от разных пользователей. Возвращает: doctor, others_doctor"""
+    doctor = Doctor.objects.create(
+        owner=medical_staff,
+        fullname='test',
+        speciality='test',
+        education='test',
+        experience=1
+    )
+
+    others_doctor = Doctor.objects.create(
+        owner=other_medical_staff,
+        fullname='test',
+        speciality='test',
+        education='test',
+        experience=1
+    )
+
+    return doctor, others_doctor
