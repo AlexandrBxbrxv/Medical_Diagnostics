@@ -7,6 +7,10 @@
 
 ###### DevLog
 
+`v1.1`
+1. Добавлена модель Service
+2. CRUD для Appointment
+
 `v1`
 1. Установлена библиотека coverage
 2. Добавлены модели Cart, History
