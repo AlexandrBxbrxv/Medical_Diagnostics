@@ -142,3 +142,22 @@ class AppointmentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Добавление записи на прием'
         return context_data
+
+
+class AppointmentListView(ListView):
+    """Контроллер для отображения списка объектов модели Appointment."""
+    model = Appointment
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Список приемов'
+
+        user = self.request.user
+        if user.groups.filter(name='medical_staff').exists():
+            users_items = []
+            for item in context_data.get('object_list'):
+                if user == item.owner:
+                    users_items.append(item)
+            context_data['object_list'] = users_items
+            return context_data
+        return context_data
