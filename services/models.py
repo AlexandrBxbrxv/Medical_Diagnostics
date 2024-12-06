@@ -32,14 +32,12 @@ class Appointment(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='appointments_owner',
                               verbose_name='владелец')
     title = models.CharField(max_length=200, verbose_name='название')
-    description = models.TextField(verbose_name='описание')
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, **NULLABLE, related_name='appointments_doctor',
                                verbose_name='врач')
 
     date_time = models.DateTimeField(**NULLABLE, verbose_name='дата и время приема')
     treatment_room = models.PositiveSmallIntegerField(verbose_name='процедурный кабинет')
-    price = models.PositiveSmallIntegerField(verbose_name='цена')
 
     def __str__(self):
         return self.title
@@ -47,6 +45,26 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'прием'
         verbose_name_plural = 'приемы'
+
+
+class Service(models.Model):
+    """Модель услуги на приеме."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='services_owner',
+                              verbose_name='владелец')
+    title = models.CharField(max_length=200, verbose_name='название')
+    description = models.TextField(verbose_name='описание')
+    preparation = models.TextField(default='Особой подготовки не требуется.', verbose_name='подготовка')
+    price = models.PositiveSmallIntegerField(verbose_name='цена')
+
+    appointment = models.ForeignKey(Appointment, on_delete=models.SET_NULL, **NULLABLE,
+                                    related_name='services_appointment', verbose_name='запись')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'услуга'
+        verbose_name_plural = 'услуги'
         ordering = ('price',)
 
 
