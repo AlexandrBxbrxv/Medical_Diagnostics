@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="container mt-3 p-0">
+  <div class="row">
+    <div class="row">
+      <div class="col-10">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ object.title }}</h5>
+          <small class="text-muted">3 дня назад</small>
+        </div>
+        <hr>
+        <p>{{ object.doctor }}</p>
+        <div class="col-2 text-end">
+          <div class="d-flex justify-content-between align-items-center h-100">
+            <div class="vr"></div>
+            <p class="mb-1">
+              {{ object.description }}<br>
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2 text-end">
+        <div class="d-flex justify-content-between align-items-center h-100">
+          <div class="vr"></div>
+
+          <div class="ms-3">
+            <h4>{{ object.price }} ₽ <a href="#" class="btn btn-info">+</a></h4>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container p-0">
+      {% for service in object.services_appointment.all %}
+      <div class="card">
+        <div class="card-body">
+      {{ service }} <h4>{{ service.price }} ₽ <a href="#" class="btn btn-info">+</a></h4><br>
+      </div>
+      </div>
+      {% endfor %}
+    </div>
+
+
+  </div>
+</div>
+{% endblock %}

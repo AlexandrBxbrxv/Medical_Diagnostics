@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{% if perms.services.add_doctor %}
+<div class="container p-0">
+  <a class="btn btn-primary" href="{% url 'services:appointment_create' %}">Добавить Прием</a>
+</div>
+{% endif %}
+<div class="container mt-3 p-0">
+  <div class="row">
+    <div class="col-3">
+      <div class="h-100">
+        <div class="card">
+          <p>Разделы</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-9">
+      {% for object in object_list %}
+      <div class="list-group">
+        <div class="list-group-item list-group-item-action">
+          <div class="row">
+            <div class="col-10">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ object.title }}</h5>
+                <small class="text-muted">3 дня назад</small>
+              </div>
+              <p class="mb-1">
+                {{ object.description }}<br>
+                {{ object.doctor }}
+              </p>
+              {{ object.services_appointment.first }}
+            </div>
+
+            <div class="col-2 text-end">
+              <div class="d-flex justify-content-between align-items-center h-100">
+                <div class="vr"></div>
+
+                <div class="ms-3">
+                  <h4>{{ object.services_appointment.first.price }} ₽ <a href="#" class="btn btn-info">+</a></h4>
+                </div>
+              </div>
+            </div>
+
+            <a class="btn btn-info" href="{% url 'services:appointment_detail' object.pk %}">Все услуги</a>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}
