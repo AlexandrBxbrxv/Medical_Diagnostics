@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from services.forms import DoctorModelForm, AppointmentModelForm
-from services.models import Doctor, Appointment
+from services.models import Doctor, Appointment, Service
 
 
 # CRUD для модели Doctor ############################################
@@ -184,3 +185,40 @@ class AppointmentDetailView(DetailView):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Запись на прием'
         return context_data
+
+
+class AppointmentUpdateView(LoginRequiredMixin, UpdateView):
+    """Контроллер для изменения объекта модели Appointment и добавления к нему объектов модели Service."""
+    model = Appointment
+    form_class = AppointmentModelForm
+    success_url = reverse_lazy('services:appointment_list')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        user = self.request.user
+
+        if user.groups.filter(name='medical_staff').exists():
+            if user == self.object.owner:
+                self.object.save()
+                return self.object
+            raise PermissionDenied
+
+        self.object.save()
+        return self.object
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        AppointmentFormset = inlineformset_factory(Appointment, Service, form=AppointmentModelForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = AppointmentFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = AppointmentFormset(instance=self.object)
+        return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        return super().form_valid(form)
