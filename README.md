@@ -10,6 +10,7 @@
 `v1.1`
 1. Добавлена модель Service
 2. CRUD для Appointment
+3. Тесты на CRUD для Appointment
 
 `v1`
 1. Установлена библиотека coverage
