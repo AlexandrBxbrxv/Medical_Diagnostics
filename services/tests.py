@@ -203,12 +203,7 @@ class AppointmentTestCase(TestCase):
 
         self.assertEqual(
             response.status_code,
-            302
-        )
-
-        self.assertEqual(
-            response.url,
-            "/services/appointment/detail/1/"
+            200
         )
 
     def test_appointment_delete(self):

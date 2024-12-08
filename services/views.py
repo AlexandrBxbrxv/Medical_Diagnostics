@@ -192,7 +192,6 @@ class AppointmentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
     model = Appointment
     form_class = AppointmentModelForm
     permission_required = 'services.change_appointment'
-    success_url = reverse_lazy('services:appointment_list')
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -207,6 +206,17 @@ class AppointmentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
         self.object.save()
         return self.object
 
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('services:doctor_detail', args=[self.kwargs.get('pk')])
+
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         AppointmentFormset = inlineformset_factory(Appointment, Service, form=AppointmentModelForm, extra=1)
@@ -215,14 +225,6 @@ class AppointmentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
         else:
             context_data['formset'] = AppointmentFormset(instance=self.object)
         return context_data
-
-    def form_valid(self, form):
-        formset = self.get_context_data()['formset']
-        self.object = form.save()
-        if formset.is_valid():
-            formset.instance = self.object
-            formset.save()
-        return super().form_valid(form)
 
 
 class AppointmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
