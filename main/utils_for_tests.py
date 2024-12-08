@@ -3,7 +3,7 @@
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
-from services.models import Doctor
+from services.models import Doctor, Appointment
 from users.models import User
 
 
@@ -12,7 +12,7 @@ def create_groups_for_test() -> tuple:
     medical_staff_group = Group.objects.create(name='medical_staff')
     user_group = Group.objects.create(name='user')
 
-    # permissions for Doctor ############################################
+    # permissions for Doctor ########################################
     content_type_doctor = ContentType.objects.get_for_model(Doctor)
 
     add_doctor = Permission.objects.get(
@@ -35,8 +35,33 @@ def create_groups_for_test() -> tuple:
         content_type=content_type_doctor,
     )
 
+    # permissions for Appointment ###################################
+    content_type_appointment = ContentType.objects.get_for_model(Appointment)
+
+    add_appointment = Permission.objects.get(
+        codename='add_appointment',
+        content_type=content_type_appointment,
+    )
+
+    view_appointment = Permission.objects.get(
+        codename='view_appointment',
+        content_type=content_type_appointment,
+    )
+
+    change_appointment = Permission.objects.get(
+        codename='change_appointment',
+        content_type=content_type_appointment,
+    )
+
+    delete_appointment = Permission.objects.get(
+        codename='delete_appointment',
+        content_type=content_type_appointment,
+    )
+
     medical_staff_group.permissions.add(add_doctor, view_doctor, change_doctor, delete_doctor)
-    user_group.permissions.add(view_doctor)
+    medical_staff_group.permissions.add(add_appointment, view_appointment, change_appointment, delete_appointment)
+
+    user_group.permissions.add(view_doctor, view_appointment)
 
     return user_group, medical_staff_group
 
@@ -102,3 +127,20 @@ def create_doctors_for_tests(medical_staff: User, other_medical_staff: User) -> 
     )
 
     return doctor, others_doctor
+
+
+def create_appointments_for_tests(medical_staff: User, other_medical_staff: User) -> tuple:
+    """Создает 2 объекта модели Appointment от разных пользователей. Возвращает: appointment, others_appointment"""
+    appointment = Appointment.objects.create(
+        owner=medical_staff,
+        title='test',
+        treatment_room=1
+    )
+
+    others_appointment = Appointment.objects.create(
+        owner=other_medical_staff,
+        title='test',
+        treatment_room=1
+    )
+
+    return appointment, others_appointment
