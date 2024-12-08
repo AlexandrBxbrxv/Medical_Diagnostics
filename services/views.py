@@ -187,10 +187,11 @@ class AppointmentDetailView(DetailView):
         return context_data
 
 
-class AppointmentUpdateView(LoginRequiredMixin, UpdateView):
+class AppointmentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Контроллер для изменения объекта модели Appointment и добавления к нему объектов модели Service."""
     model = Appointment
     form_class = AppointmentModelForm
+    permission_required = 'services.change_appointment'
     success_url = reverse_lazy('services:appointment_list')
 
     def get_object(self, queryset=None):
@@ -222,3 +223,28 @@ class AppointmentUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
+
+class AppointmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    """Контроллер для удаления объекта модели Appointment."""
+    model = Appointment
+    permission_required = 'services.delete_appointment'
+    success_url = reverse_lazy('services:appointment_list')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        user = self.request.user
+
+        if user.groups.filter(name='medical_staff').exists():
+            if user == self.object.owner:
+                self.object.save()
+                return self.object
+            raise PermissionDenied
+
+        self.object.save()
+        return self.object
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Удаление приема'
+        return context_data

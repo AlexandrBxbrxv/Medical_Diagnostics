@@ -2,7 +2,7 @@ from django.urls import path
 
 from services.apps import ServicesConfig
 from services.views import DoctorCreateView, DoctorListView, DoctorDetailView, DoctorUpdateView, DoctorDeleteView, \
-    AppointmentCreateView, AppointmentListView, AppointmentDetailView, AppointmentUpdateView
+    AppointmentCreateView, AppointmentListView, AppointmentDetailView, AppointmentUpdateView, AppointmentDeleteView
 
 app_name = ServicesConfig.name
 
@@ -18,4 +18,5 @@ urlpatterns = [
     path('appointment/list/', AppointmentListView.as_view(), name='appointment_list'),
     path('appointment/detail/<int:pk>/', AppointmentDetailView.as_view(), name='appointment_detail'),
     path('appointment/update/<int:pk>/', AppointmentUpdateView.as_view(), name='appointment_update'),
+    path('appointment/delete/<int:pk>/', AppointmentDeleteView.as_view(), name='appointment_delete'),
 ]
