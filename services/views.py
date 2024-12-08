@@ -161,3 +161,26 @@ class AppointmentListView(ListView):
             context_data['object_list'] = users_items
             return context_data
         return context_data
+
+
+class AppointmentDetailView(DetailView):
+    """Контроллер для отображения объекта модели Appointment."""
+    model = Appointment
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        user = self.request.user
+
+        if user.groups.filter(name='medical_staff').exists():
+            if user == self.object.owner:
+                self.object.save()
+                return self.object
+            raise PermissionDenied
+
+        self.object.save()
+        return self.object
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Запись на прием'
+        return context_data
