@@ -6,29 +6,36 @@ from services.models import Doctor, Appointment, Service, Analysis, Result
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('id', 'fullname', 'speciality')
     search_fields = ('fullname', 'speciality',)
+    ordering = ('id', 'fullname',)
 
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'doctor',)
     search_fields = ('title',)
+    ordering = ('id', 'title',)
+    list_filter = ('doctor',)
 
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'price', 'appointment',)
     search_fields = ('title',)
-    ordering = ('price', 'appointment',)
+    ordering = ('id', 'title', 'price',)
+    list_filter = ('appointment',)
 
 
 @admin.register(Analysis)
 class AnalysisAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'doctor', 'price',)
     search_fields = ('title',)
-    ordering = ('price',)
+    ordering = ('id', 'title', 'price',)
+    list_filter = ('doctor',)
 
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'analysis', 'appointment',)
     search_fields = ('title',)
+    ordering = ('id', 'title',)
+    list_filter = ('analysis', 'appointment',)
