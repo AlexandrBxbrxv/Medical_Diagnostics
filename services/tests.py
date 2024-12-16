@@ -2,8 +2,8 @@ from django.db import connection
 from django.test import TestCase, Client
 
 from main.utils_for_tests import create_groups_for_test, create_users_for_tests, create_doctors_for_tests, \
-    create_appointments_for_tests, create_analysis_for_tests
-from services.models import Doctor, Appointment, Analysis
+    create_appointments_for_tests, create_analysis_for_tests, create_results_for_tests
+from services.models import Doctor, Appointment, Analysis, Result
 
 
 class DoctorTestCase(TestCase):
@@ -248,7 +248,7 @@ class AnalysisTestCase(TestCase):
         self.client = Client()
         self.client.force_login(user=self.medical_staff)
 
-    def test_appointment_create(self):
+    def test_analysis_create(self):
         """Создание анализа авторизованным пользователем."""
 
         data = {
@@ -277,7 +277,7 @@ class AnalysisTestCase(TestCase):
 
         self.assertTrue(Analysis.objects.filter(pk=3))
 
-    def test_appointment_list(self):
+    def test_analysis_list(self):
         """Просмотр списка анализов авторизованным пользователем."""
 
         response = self.client.get(
@@ -289,7 +289,7 @@ class AnalysisTestCase(TestCase):
             200
         )
 
-    def test_appointment_detail(self):
+    def test_analysis_detail(self):
         """Просмотр анализа авторизованным пользователем."""
 
         response = self.client.get(
@@ -301,7 +301,7 @@ class AnalysisTestCase(TestCase):
             200
         )
 
-    def test_appointment_update(self):
+    def test_analysis_update(self):
         """Изменение анализа авторизованным пользователем."""
 
         data = {
@@ -319,7 +319,7 @@ class AnalysisTestCase(TestCase):
             200
         )
 
-    def test_appointment_delete(self):
+    def test_analysis_delete(self):
         """Удаление анализа авторизованным пользователем."""
 
         response = self.client.delete(
@@ -337,3 +337,113 @@ class AnalysisTestCase(TestCase):
         )
 
         self.assertTrue(not Analysis.objects.filter(pk=1))
+        
+
+class ResultTestCase(TestCase):
+    """Тестирование работоспособности контроллеров модели Result."""
+
+    def reset_sequence(self):
+        with connection.cursor() as cursor:
+            cursor.execute("ALTER SEQUENCE users_user_id_seq RESTART WITH 1;")
+            cursor.execute("ALTER SEQUENCE services_result_id_seq RESTART WITH 1;")
+
+    def setUp(self):
+        self.reset_sequence()
+
+        self.user, self.other_user, self.medical_staff, self.other_medical_staff = create_users_for_tests(
+            *create_groups_for_test()
+        )
+
+        self.result, self.others_result = create_results_for_tests(
+            self.medical_staff, self.other_medical_staff
+        )
+
+        self.client = Client()
+        self.client.force_login(user=self.medical_staff)
+
+    def test_result_create(self):
+        """Создание результата авторизованным пользователем."""
+
+        data = {
+            "title": "test",
+            "message": "test"
+        }
+
+        response = self.client.post(
+            '/services/result/create/',
+            data=data,
+            format='json'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302
+        )
+
+        self.assertEqual(
+            response.url,
+            "/services/result/create/"
+        )
+
+        self.assertTrue(Result.objects.filter(pk=3))
+
+    def test_result_list(self):
+        """Просмотр списка результаов авторизованным пользователем."""
+
+        response = self.client.get(
+            '/services/result/list/'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+    def test_result_detail(self):
+        """Просмотр результата авторизованным пользователем."""
+
+        response = self.client.get(
+            '/services/result/detail/1/'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+    def test_result_update(self):
+        """Изменение результата авторизованным пользователем."""
+
+        data = {
+            "title": "change"
+        }
+
+        response = self.client.put(
+            '/services/result/update/1/',
+            data=data,
+            format='json'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+    def test_result_delete(self):
+        """Удаление результата авторизованным пользователем."""
+
+        response = self.client.delete(
+            '/services/result/delete/1/'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302
+        )
+
+        self.assertEqual(
+            response.url,
+            "/services/result/list/"
+        )
+
+        self.assertTrue(not Result.objects.filter(pk=1))
