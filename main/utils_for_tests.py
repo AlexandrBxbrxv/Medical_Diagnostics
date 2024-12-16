@@ -3,7 +3,7 @@
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
-from services.models import Doctor, Appointment, Analysis
+from services.models import Doctor, Appointment, Analysis, Result
 from users.models import User
 
 
@@ -81,11 +81,35 @@ def create_groups_for_test() -> tuple:
         content_type=content_type_analysis,
     )
 
+    # permissions for Result ######################################
+    content_type_result = ContentType.objects.get_for_model(Result)
+
+    add_result = Permission.objects.get(
+        codename='add_result',
+        content_type=content_type_result,
+    )
+
+    view_result = Permission.objects.get(
+        codename='view_result',
+        content_type=content_type_result,
+    )
+
+    change_result = Permission.objects.get(
+        codename='change_result',
+        content_type=content_type_result,
+    )
+
+    delete_result = Permission.objects.get(
+        codename='delete_result',
+        content_type=content_type_result,
+    )
+    
     medical_staff_group.permissions.add(add_doctor, view_doctor, change_doctor, delete_doctor)
     medical_staff_group.permissions.add(add_appointment, view_appointment, change_appointment, delete_appointment)
     medical_staff_group.permissions.add(add_analysis, view_analysis, change_analysis, delete_analysis)
+    medical_staff_group.permissions.add(add_result, view_result, change_result, delete_result)
 
-    user_group.permissions.add(view_doctor, view_appointment, view_analysis)
+    user_group.permissions.add(view_doctor, view_appointment, view_analysis, view_result)
 
     return user_group, medical_staff_group
 
@@ -191,3 +215,20 @@ def create_analysis_for_tests(medical_staff: User, other_medical_staff: User) ->
     )
 
     return analysis, others_analysis
+
+
+def create_results_for_tests(medical_staff: User, other_medical_staff: User) -> tuple:
+    """Создает 2 объекта модели Result от разных пользователей. Возвращает: result, others_result"""
+    result = Result.objects.create(
+        owner=medical_staff,
+        title='test',
+        message='test'
+    )
+
+    others_result = Result.objects.create(
+        owner=other_medical_staff,
+        title='test',
+        message='test'
+    )
+
+    return result, others_result
