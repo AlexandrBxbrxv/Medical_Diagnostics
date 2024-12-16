@@ -4,8 +4,8 @@ from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from services.forms import DoctorModelForm, AppointmentModelForm
-from services.models import Doctor, Appointment, Service
+from services.forms import DoctorModelForm, AppointmentModelForm, AnalysisModelForm
+from services.models import Doctor, Appointment, Service, Analysis
 
 
 # CRUD для модели Doctor ############################################
@@ -133,10 +133,10 @@ class AppointmentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
     success_url = reverse_lazy('services:appointment_create')
 
     def form_valid(self, form):
-        doctor = form.save()
+        appointment = form.save()
         user = self.request.user
-        doctor.owner = user
-        doctor.save()
+        appointment.owner = user
+        appointment.save()
         return super().form_valid(form)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -183,7 +183,7 @@ class AppointmentDetailView(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['title'] = 'Запись на прием'
+        context_data['title'] = 'Прием'
         return context_data
 
 
@@ -215,7 +215,7 @@ class AppointmentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateV
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('services:doctor_detail', args=[self.kwargs.get('pk')])
+        return reverse('services:appointment_detail', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -249,4 +249,120 @@ class AppointmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteV
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Удаление приема'
+        return context_data
+
+
+# CRUD для модели Analysis ##########################################
+class AnalysisCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    """Контроллер для создания объекта модели Analysis."""
+    model = Analysis
+    form_class = AnalysisModelForm
+    permission_required = 'services.add_analysis'
+    success_url = reverse_lazy('services:analysis_create')
+
+    def form_valid(self, form):
+        analysis = form.save()
+        user = self.request.user
+        analysis.owner = user
+        analysis.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Добавление анализа'
+        return context_data
+
+
+class AnalysisListView(ListView):
+    """Контроллер для отображения списка объектов модели Analysis."""
+    model = Analysis
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Список анализов'
+
+        user = self.request.user
+        if user.groups.filter(name='medical_staff').exists():
+            users_items = []
+            for item in context_data.get('object_list'):
+                if user == item.owner:
+                    users_items.append(item)
+            context_data['object_list'] = users_items
+            return context_data
+        return context_data
+
+
+class AnalysisDetailView(DetailView):
+    """Контроллер для отображения объекта модели Analysis."""
+    model = Analysis
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        user = self.request.user
+
+        if user.groups.filter(name='medical_staff').exists():
+            if user == self.object.owner:
+                self.object.save()
+                return self.object
+            raise PermissionDenied
+
+        self.object.save()
+        return self.object
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Анализ'
+        return context_data
+
+
+class AnalysisUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    """Контроллер для редактирования объекта модели Analysis."""
+    model = Analysis
+    form_class = AnalysisModelForm
+    permission_required = 'services.change_analysis'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        user = self.request.user
+
+        if user.groups.filter(name='medical_staff').exists():
+            if user == self.object.owner:
+                self.object.save()
+                return self.object
+            raise PermissionDenied
+
+        self.object.save()
+        return self.object
+
+    def get_success_url(self):
+        return reverse('services:analysis_detail', args=[self.kwargs.get('pk')])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Редактирование анализа'
+        return context_data
+
+
+class AnalysisDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    """Контроллер для удаления объекта модели Analysis."""
+    model = Analysis
+    permission_required = 'services.delete_analysis'
+    success_url = reverse_lazy('services:analysis_list')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        user = self.request.user
+
+        if user.groups.filter(name='medical_staff').exists():
+            if user == self.object.owner:
+                self.object.save()
+                return self.object
+            raise PermissionDenied
+
+        self.object.save()
+        return self.object
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Удаление анализа'
         return context_data
