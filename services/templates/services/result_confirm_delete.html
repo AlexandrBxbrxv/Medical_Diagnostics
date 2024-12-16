@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="card mt-4">
+      <div class="card-header">
+        <h6>{{ object.title }}</h6>
+      </div>
+      <div class="card-body" style="height:70px">
+        <p>{{ object.appointment }}<br>
+          {{ object.analysis }}
+        </p>
+      </div>
+      <div class="card-footer">
+         <div class="row col-12">
+        <div class="col-6 p-1">
+          <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger col-12">Удалить</button>
+          </form>
+        </div>
+            <div class="col-6 p-1">
+            <a class="btn btn-outline-primary col-12" href="{% url 'services:result_list' %}">К списку результатов</a>
+          </div>
+      </div>
+    </div>
+{% endblock %}

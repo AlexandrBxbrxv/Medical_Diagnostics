@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<div class="row">
+
+  <div class="col-9">
+    <h4>{{ object.title }}</h4>
+    <h6>Описание</h6>
+    <p>{{ object.description }}</p>
+    <hr>
+    <h6>Подготовка</h6>
+    <p>{{ object.preparation }}</p>
+    <hr>
+    <h6>Цена</h6>
+    <p>{{ object.price }} ₽</p>
+  </div>
+
+  <div class="col-3">
+    <div class="col-12">
+      <div class="col-12 mt-2">
+        <a class="btn btn-outline-primary col-12" href="{% url 'services:result_list' %}">К списку результатов</a>
+      </div>
+      {% if perms.services.change_result and perms.services.delete_result %}
+      <div class="row p-2">
+        <div class="col-6 p-1">
+          <a class="btn btn-outline-primary col-12" href="{% url 'services:result_update' object.pk %}">Изменить</a>
+        </div>
+        <div class="col-6 p-1">
+          <a class="btn btn-outline-primary col-12" href="{% url 'services:result_delete' object.pk %}">Удалить</a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}
