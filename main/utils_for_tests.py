@@ -3,7 +3,7 @@
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
-from services.models import Doctor, Appointment
+from services.models import Doctor, Appointment, Analysis
 from users.models import User
 
 
@@ -58,10 +58,34 @@ def create_groups_for_test() -> tuple:
         content_type=content_type_appointment,
     )
 
+    # permissions for Analysis ######################################
+    content_type_analysis = ContentType.objects.get_for_model(Analysis)
+
+    add_analysis = Permission.objects.get(
+        codename='add_analysis',
+        content_type=content_type_analysis,
+    )
+
+    view_analysis = Permission.objects.get(
+        codename='view_analysis',
+        content_type=content_type_analysis,
+    )
+
+    change_analysis = Permission.objects.get(
+        codename='change_analysis',
+        content_type=content_type_analysis,
+    )
+
+    delete_analysis = Permission.objects.get(
+        codename='delete_analysis',
+        content_type=content_type_analysis,
+    )
+
     medical_staff_group.permissions.add(add_doctor, view_doctor, change_doctor, delete_doctor)
     medical_staff_group.permissions.add(add_appointment, view_appointment, change_appointment, delete_appointment)
+    medical_staff_group.permissions.add(add_analysis, view_analysis, change_analysis, delete_analysis)
 
-    user_group.permissions.add(view_doctor, view_appointment)
+    user_group.permissions.add(view_doctor, view_appointment, view_analysis)
 
     return user_group, medical_staff_group
 
@@ -144,3 +168,26 @@ def create_appointments_for_tests(medical_staff: User, other_medical_staff: User
     )
 
     return appointment, others_appointment
+
+
+def create_analysis_for_tests(medical_staff: User, other_medical_staff: User) -> tuple:
+    """Создает 2 объекта модели Analysis от разных пользователей. Возвращает: analysis, others_analysis"""
+    analysis = Analysis.objects.create(
+        owner=medical_staff,
+        title='test',
+        description='test',
+        preparation='test',
+        treatment_room=1,
+        price=1
+    )
+
+    others_analysis = Analysis.objects.create(
+        owner=other_medical_staff,
+        title='test',
+        description='test',
+        preparation='test',
+        treatment_room=1,
+        price=1
+    )
+
+    return analysis, others_analysis
