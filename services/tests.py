@@ -2,8 +2,8 @@ from django.db import connection
 from django.test import TestCase, Client
 
 from main.utils_for_tests import create_groups_for_test, create_users_for_tests, create_doctors_for_tests, \
-    create_appointments_for_tests
-from services.models import Doctor, Appointment
+    create_appointments_for_tests, create_analysis_for_tests
+from services.models import Doctor, Appointment, Analysis
 
 
 class DoctorTestCase(TestCase):
@@ -224,3 +224,116 @@ class AppointmentTestCase(TestCase):
         )
 
         self.assertTrue(not Appointment.objects.filter(pk=1))
+
+
+class AnalysisTestCase(TestCase):
+    """Тестирование работоспособности контроллеров модели Analysis."""
+
+    def reset_sequence(self):
+        with connection.cursor() as cursor:
+            cursor.execute("ALTER SEQUENCE users_user_id_seq RESTART WITH 1;")
+            cursor.execute("ALTER SEQUENCE services_analysis_id_seq RESTART WITH 1;")
+
+    def setUp(self):
+        self.reset_sequence()
+
+        self.user, self.other_user, self.medical_staff, self.other_medical_staff = create_users_for_tests(
+            *create_groups_for_test()
+        )
+
+        self.analysis, self.others_analysis = create_analysis_for_tests(
+            self.medical_staff, self.other_medical_staff
+        )
+
+        self.client = Client()
+        self.client.force_login(user=self.medical_staff)
+
+    def test_appointment_create(self):
+        """Создание анализа авторизованным пользователем."""
+
+        data = {
+            "title": "test",
+            "description": "test",
+            "preparation": "test",
+            "treatment_room": 1,
+            "price": 1
+        }
+
+        response = self.client.post(
+            '/services/analysis/create/',
+            data=data,
+            format='json'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302
+        )
+
+        self.assertEqual(
+            response.url,
+            "/services/analysis/create/"
+        )
+
+        self.assertTrue(Analysis.objects.filter(pk=3))
+
+    def test_appointment_list(self):
+        """Просмотр списка анализов авторизованным пользователем."""
+
+        response = self.client.get(
+            '/services/analysis/list/'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+    def test_appointment_detail(self):
+        """Просмотр анализа авторизованным пользователем."""
+
+        response = self.client.get(
+            '/services/analysis/detail/1/'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+    def test_appointment_update(self):
+        """Изменение анализа авторизованным пользователем."""
+
+        data = {
+            "title": "change"
+        }
+
+        response = self.client.put(
+            '/services/analysis/update/1/',
+            data=data,
+            format='json'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+    def test_appointment_delete(self):
+        """Удаление анализа авторизованным пользователем."""
+
+        response = self.client.delete(
+            '/services/analysis/delete/1/'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302
+        )
+
+        self.assertEqual(
+            response.url,
+            "/services/analysis/list/"
+        )
+
+        self.assertTrue(not Analysis.objects.filter(pk=1))
