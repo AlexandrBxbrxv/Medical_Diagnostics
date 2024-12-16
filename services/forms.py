@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 
 from main.forms import StyleFormMixin
-from services.models import Doctor, Appointment, Analysis
+from services.models import Doctor, Appointment, Analysis, Result
 
 
 class DoctorModelForm(StyleFormMixin, ModelForm):
@@ -23,4 +23,12 @@ class AnalysisModelForm(StyleFormMixin, ModelForm):
 
     class Meta:
         model = Analysis
+        exclude = ('owner',)
+
+
+class ResultModelForm(StyleFormMixin, ModelForm):
+    """Форма для создания/редактирования объекта модели Result."""
+
+    class Meta:
+        model = Result
         exclude = ('owner',)
