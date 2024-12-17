@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h4>История компании</h4>
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fringilla cursus lobortis. Morbi tristique dui neque,
+  eget condimentum turpis vulputate a. Aenean eu lectus vitae purus convallis ultrices eget et justo. Nunc pulvinar,
+  arcu a semper tempus, nisi mauris facilisis erat, nec porttitor dui ipsum nec ipsum. Suspendisse condimentum enim
+  nulla, sit amet ornare turpis blandit eu. Donec tincidunt turpis ut accumsan posuere. Nam viverra libero dignissim
+  elit consequat aliquam. Vestibulum iaculis congue ullamcorper. Morbi tristique vehicula tortor vitae sollicitudin.
+  Pellentesque viverra purus ut eros tristique convallis. Phasellus efficitur dui scelerisque pretium porttitor.
+</p>
+<hr>
+<h4>Миссия и ценности</h4>
+<p>
+  Ut lobortis blandit felis, at mattis nisl accumsan ut. Donec consequat pretium nisi sit amet porttitor. Proin mi elit,
+  faucibus in augue nec, vehicula porttitor lacus. In fringilla vehicula massa vitae bibendum. Praesent blandit quis ex
+  vel interdum. Vestibulum sollicitudin luctus nulla sit amet mattis. Nunc sed nisi finibus, lobortis massa ac,
+  condimentum lorem. Phasellus laoreet nec dolor sit amet venenatis. Cras rhoncus tellus ut gravida aliquet. Phasellus
+  nec urna eget mauris molestie porta at ac magna. In condimentum est lectus, sit amet fringilla velit feugiat nec.
+</p>
+<h4>Команда врачей</h4>
+<p>
+  Nullam mollis augue vitae diam condimentum maximus. Nulla facilisi. Nunc suscipit ornare ligula id egestas. Quisque
+  mollis metus ac faucibus faucibus. Fusce a efficitur est.<br>
+  Количество специалистов: {{ doctor_count }}
+</p>
+<a href="{% url 'services:doctor_list' %}">Подробный список врачей</a>
+{% endblock %}
