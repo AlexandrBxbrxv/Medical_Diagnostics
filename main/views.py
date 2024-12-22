@@ -1,6 +1,10 @@
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic import TemplateView
 
+from main.models import Feedback
 from services.models import Doctor
+from users.models import User
 
 
 class IndexTemplateView(TemplateView):
@@ -32,3 +36,27 @@ class ContactsTemplateView(TemplateView):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Контакты'
         return context_data
+
+
+def feedback(request):
+    """Для отправки обратной связи."""
+
+    user = None
+
+    if isinstance(request.user, User):
+        user = request.user
+
+    fullname = request.POST.get("fullname")
+    email = request.POST.get("email")
+    message = request.POST.get("message")
+
+    if fullname and email and message:
+
+        Feedback.objects.create(
+            owner=user,
+            fullname=fullname,
+            email=email,
+            message=message
+        )
+
+    return HttpResponseRedirect(reverse('main:index'))

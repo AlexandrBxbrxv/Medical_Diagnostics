@@ -29,25 +29,12 @@
       Екатеринбург: +7-777-777-77-77<br>
       Меж город: 7-77-77
     </p>
-    <form>
-      <div class="card">
 
-        <div class="card-header">
-          <h4>Обратная связь</h4>
-        </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+      Форма обратной связи
+    </button>
+    {% include 'main/includes/inc_feedback_form.html' %}
 
-        <div class="card-body">
-          <input type="text" class="form-control" id="user_name_id" placeholder="Ф.И.О.">
-          <input type="email" class="form-control mt-2" id="user_email_id" placeholder="Email">
-          <input type="text" class="form-control mt-2" id="user_message_id" placeholder="Сообщение">
-        </div>
-
-        <div class="card-footer">
-          <button class="btn btn-info" type="submit">Отправить</button>
-        </div>
-
-      </div>
-    </form>
   </div>
 </div>
 {% endblock %}
