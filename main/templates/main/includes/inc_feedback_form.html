@@ -1,0 +1,22 @@
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'main:feedback' %}">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="feedbackModalLabel">Форма обратной связи</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% csrf_token %}
+          <input type="text" class="form-control" id="fullname_id" name="fullname" placeholder="Ф.И.О.">
+          <input type="email" class="form-control mt-2" id="email_id" name="email" placeholder="Email">
+          <input type="text" class="form-control mt-2" id="message_id" name="message" placeholder="Сообщение">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
