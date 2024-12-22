@@ -11,11 +11,3 @@ class StyleFormMixin:
                 field.widget.attrs['class'] = 'form-check-input'
             else:
                 field.widget.attrs['class'] = 'form-control'
-
-
-class FeedbackModelForm(StyleFormMixin, ModelForm):
-    """Форма для создания/редактирования объекта модели Feedback."""
-
-    class Meta:
-        model = Feedback
-        exclude = ('owner', 'date_created', 'is_closed')
