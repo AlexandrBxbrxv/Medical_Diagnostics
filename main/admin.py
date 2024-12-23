@@ -11,10 +11,10 @@ class FeedbackAdmin(admin.ModelAdmin):
     ordering = ('id', 'fullname',)
     list_filter = ('is_closed',)
 
-    actions = ["close_feedback"]
+    actions = ['close_feedbacks']
 
     @admin.action(description="Close selected feedbacks")
-    def close_feedback(self, request, queryset):
+    def close_feedbacks(self, request, queryset):
         updated = queryset.update(is_closed=True)
         self.message_user(
             request,
