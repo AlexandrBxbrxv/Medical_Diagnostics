@@ -16,3 +16,7 @@ class Feedback(models.Model):
     message = models.TextField(verbose_name='сообщение')
     date_created = models.DateField(auto_now=True, verbose_name='время создания')
     is_closed = models.BooleanField(default=False, verbose_name='признак закрытости')
+
+    class Meta:
+        verbose_name = 'сообщение'
+        verbose_name_plural = 'сообщения'
