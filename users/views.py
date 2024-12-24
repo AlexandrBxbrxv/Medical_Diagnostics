@@ -88,13 +88,13 @@ class UserProfileUpdate(LoginRequiredMixin, UpdateView):
 
 def get_cart_info(object_list):
     cart_count = 0
-    cart_summ = 0
+    cart_sum = 0
 
     if object_list is not None:
         cart_count = len(object_list)
-        cart_summ = [obj.price + cart_summ for obj in object_list]
+        cart_sum = sum(obj.analysis.price + cart_sum or obj.appointmenp.price + cart_sum for obj in object_list)
 
-    return cart_count, cart_summ
+    return cart_count, cart_sum
 
 
 class CartListView(LoginRequiredMixin, ListView):
@@ -110,15 +110,15 @@ class CartListView(LoginRequiredMixin, ListView):
             object_list = Cart.objects.filter(owner=user)
             context_data['object_list'] = object_list
 
-            cart_count, cart_summ = get_cart_info(object_list)
+            cart_count, cart_sum = get_cart_info(object_list)
 
             context_data['cart_count'] = cart_count
-            context_data['cart_summ'] = cart_summ
+            context_data['cart_sum'] = cart_sum
             return context_data
 
-        cart_count, cart_summ = get_cart_info(object_list)
+        cart_count, cart_sum = get_cart_info(object_list)
         context_data['cart_count'] = cart_count
-        context_data['cart_summ'] = cart_summ
+        context_data['cart_sum'] = cart_sum
         return context_data
 
 
