@@ -39,7 +39,7 @@
 
                 <div class="d-flex w-100 justify-content-between">
                   <h4 class="mb-1">{{ object.price }} ₽</h4>
-                  <h4><a href="#" class="btn btn-info">+</a></h4>
+                    <h4><button onclick="add_to_cart({{ object.pk }})" class="btn btn-info">+</button></h4>
                 </div>
 
               </div>
@@ -53,4 +53,14 @@
 
   </div>
 </div>
+
+<script>
+  function add_to_cart(id) {
+        fetch("{% url 'users:add_to_cart' %}?type=analysis&id="+id, {method: 'GET',}).then(response => {
+        });
+    }
+</script>
+
+
 {% endblock %}
+
