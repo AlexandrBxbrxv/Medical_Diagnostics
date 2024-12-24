@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.utils.translation import ngettext
 
-from users.models import User
+from users.models import User, Cart, History
 
 
 @admin.register(User)
@@ -26,3 +26,19 @@ class UserAdmin(admin.ModelAdmin):
             % updated,
             messages.SUCCESS,
         )
+
+
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('id', 'owner', 'analyses', 'appointments',)
+    search_fields = ('analyses', 'appointments',)
+    ordering = ('id',)
+    list_filter = ('owner',)
+
+
+@admin.register(History)
+class HistoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'owner', 'analyses', 'appointments', 'results',)
+    search_fields = ('analyses', 'appointments', 'results',)
+    ordering = ('id',)
+    list_filter = ('owner',)
