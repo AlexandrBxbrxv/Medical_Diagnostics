@@ -30,15 +30,15 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'analyses', 'appointments',)
-    search_fields = ('analyses', 'appointments',)
+    list_display = ('id', 'owner', 'analysis', 'appointment',)
+    search_fields = ('analysis', 'appointment',)
     ordering = ('id',)
     list_filter = ('owner',)
 
 
 @admin.register(History)
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'analyses', 'appointments', 'results',)
-    search_fields = ('analyses', 'appointments', 'results',)
+    list_display = ('id', 'owner', 'analysis', 'appointment', 'result',)
+    search_fields = ('analysis', 'appointment', 'result',)
     ordering = ('id',)
     list_filter = ('owner',)
