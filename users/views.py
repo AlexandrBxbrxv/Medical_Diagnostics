@@ -1,15 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, ListView
 
+from services.models import Analysis, Appointment
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileUpdateForm
-from users.models import User
+from users.models import User, Cart, History
 from users.services import send_email_verification
 
 
+# Контроллеры относящиеся к модели User #############################
 class UserLoginView(LoginView):
     """Контроллер для логина пользователя."""
     template_name = 'users/login.html'
@@ -79,3 +82,83 @@ class UserProfileUpdate(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Редактирование профиля'
         return context
+
+
+# Контроллеры относящиеся к модели Cart #############################
+
+def get_cart_info(object_list):
+    cart_count = 0
+    cart_summ = 0
+
+    if object_list is not None:
+        cart_count = len(object_list)
+        cart_summ = [obj.price + cart_summ for obj in object_list]
+
+    return cart_count, cart_summ
+
+
+class CartListView(LoginRequiredMixin, ListView):
+    """Контроллер для отображения списка объектов модели Cart."""
+    model = Cart
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Корзина'
+
+        user = self.request.user
+        if user.groups.filter(name='user').exists():
+            object_list = Cart.objects.filter(owner=user)
+            context_data['object_list'] = object_list
+
+            cart_count, cart_summ = get_cart_info(object_list)
+
+            context_data['cart_count'] = cart_count
+            context_data['cart_summ'] = cart_summ
+            return context_data
+
+        cart_count, cart_summ = get_cart_info(object_list)
+        context_data['cart_count'] = cart_count
+        context_data['cart_summ'] = cart_summ
+        return context_data
+
+
+def add_to_cart(request):
+    """Для добавления анализа/приема в корзину."""
+
+    user = request.user
+    obj_class = request.GET['type']
+    pk = request.GET['id']
+
+    if obj_class == 'analysis':
+        Cart.objects.create(
+            owner=user,
+            analysis=Analysis.objects.get(pk=pk)
+        )
+
+    if obj_class == 'appointment':
+        Cart.objects.create(
+            owner=user,
+            appointment=Appointment.objects.get(pk=pk)
+        )
+
+    return HttpResponse(status=201)
+
+
+# Контроллеры относящиеся к модели History ##########################
+class HistoryListView(LoginRequiredMixin, ListView):
+    """Контроллер для отображения списка объектов модели History."""
+    model = History
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'История'
+
+        user = self.request.user
+        if user.groups.filter(name='user').exists():
+            users_items = []
+            for item in context_data.get('object_list'):
+                if user == item.owner:
+                    users_items.append(item)
+            context_data['object_list'] = users_items
+            return context_data
+        return context_data
