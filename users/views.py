@@ -85,7 +85,6 @@ class UserProfileUpdate(LoginRequiredMixin, UpdateView):
 
 
 # Контроллеры относящиеся к модели Cart #############################
-
 def get_cart_info(object_list):
     cart_count = 0
     cart_sum = 0
@@ -111,7 +110,6 @@ class CartListView(LoginRequiredMixin, ListView):
             context_data['object_list'] = object_list
 
             cart_count, cart_sum = get_cart_info(object_list)
-
             context_data['cart_count'] = cart_count
             context_data['cart_sum'] = cart_sum
             return context_data
@@ -155,10 +153,7 @@ class HistoryListView(LoginRequiredMixin, ListView):
 
         user = self.request.user
         if user.groups.filter(name='user').exists():
-            users_items = []
-            for item in context_data.get('object_list'):
-                if user == item.owner:
-                    users_items.append(item)
-            context_data['object_list'] = users_items
+            object_list = History.objects.filter(owner=user)
+            context_data['object_list'] = object_list
             return context_data
         return context_data
