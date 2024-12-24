@@ -39,11 +39,10 @@ class Cart(models.Model):
     """Модель корзины для набора анализов и приемов для последующей оплаты."""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='carts_owner',
                               verbose_name='владелец')
-    analyses = models.ForeignKey(Analysis, on_delete=models.CASCADE, **NULLABLE, related_name='carts_analyses',
+    analysis = models.ForeignKey(Analysis, on_delete=models.CASCADE, **NULLABLE, related_name='carts_analysis',
                                  verbose_name='анализ')
-    appointments = models.ForeignKey(Appointment, on_delete=models.CASCADE, **NULLABLE,
-                                     related_name='carts_appointments', verbose_name='прием')
-    summ = models.PositiveIntegerField(default=0, verbose_name='сумма к оплате')
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, **NULLABLE,
+                                    related_name='carts_appointment', verbose_name='прием')
 
     class Meta:
         verbose_name = 'козина'
@@ -54,12 +53,12 @@ class History(models.Model):
     """Модель истории для записи всех оплаченных услуг и результатов."""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='histories_owner',
                               verbose_name='владелец')
-    analyses = models.ForeignKey(Analysis, on_delete=models.CASCADE, **NULLABLE, related_name='histories_analyses',
+    analysis = models.ForeignKey(Analysis, on_delete=models.CASCADE, **NULLABLE, related_name='histories_analysis',
                                  verbose_name='анализ')
-    appointments = models.ForeignKey(Appointment, on_delete=models.CASCADE, **NULLABLE,
-                                     related_name='histories_appointments', verbose_name='прием')
-    results = models.ForeignKey(Result, on_delete=models.CASCADE, **NULLABLE, related_name='histories_results',
-                                verbose_name='результат')
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, **NULLABLE,
+                                    related_name='histories_appointment', verbose_name='прием')
+    result = models.ForeignKey(Result, on_delete=models.CASCADE, **NULLABLE, related_name='histories_result',
+                               verbose_name='результат')
 
     class Meta:
         verbose_name = 'история'
