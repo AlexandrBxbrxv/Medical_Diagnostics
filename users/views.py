@@ -121,7 +121,7 @@ class CartListView(LoginRequiredMixin, ListView):
 
 
 def add_to_cart(request):
-    """Для добавления анализа/приема в корзину."""
+    """Добавляет анализ или прием в корзину."""
 
     user = request.user
     obj_class = request.GET['type']
@@ -140,6 +140,17 @@ def add_to_cart(request):
         )
 
     return HttpResponse(status=201)
+
+
+def delete_from_cart(request):
+    """Удаляет объекты из корзины."""
+
+    user = request.user
+    pk = request.GET['id']
+
+    Cart.objects.get(owner=user, pk=pk).delete()
+
+    return HttpResponse(status=204)
 
 
 # Контроллеры относящиеся к модели History ##########################
