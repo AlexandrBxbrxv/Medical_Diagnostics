@@ -57,7 +57,9 @@
                 {% if object.appointment %}
                 <h4 class="mb-1">{{ object.appointment.price }} ₽</h4>
                 {% endif %}
-                <h4><a href="#" class="btn btn-danger">-</a></h4>
+                <button class="btn btn-danger ps-4 pe-4" onclick="delete_from_cart({{ object.pk }})">
+                  <h3>-</h3>
+                </button>
               </div>
 
             </div>
@@ -70,4 +72,13 @@
     {% endfor %}
   </div>
 </div>
+
+<script>
+  function delete_from_cart(id) {
+        fetch("{% url 'users:delete_from_cart' %}?id="+id, {method: 'GET',}).then(response => {
+        });
+        location.reload();
+    }
+</script>
+
 {% endblock %}
