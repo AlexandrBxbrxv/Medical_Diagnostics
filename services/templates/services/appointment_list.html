@@ -38,7 +38,8 @@
                 <div class="vr"></div>
 
                 <div class="ms-3">
-                  <h4>{{ object.services_appointment.first.price }} ₽ <a href="#" class="btn btn-info">+</a></h4>
+                  <h4>{{ object.services_appointment.first.price }} ₽</h4>
+                    <h4><button onclick="add_to_cart({{ object.pk }})" class="btn btn-info">+</button></h4>
                 </div>
               </div>
             </div>
@@ -53,4 +54,12 @@
 
   </div>
 </div>
+
+<script>
+  function add_to_cart(id) {
+        fetch("{% url 'users:add_to_cart' %}?type=appointment&id="+id, {method: 'GET',}).then(response => {
+        });
+    }
+</script>
+
 {% endblock %}
