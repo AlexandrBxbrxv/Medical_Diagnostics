@@ -3,7 +3,7 @@ from users.apps import UsersConfig
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 from users.views import UserLoginView, UserRegister, email_verification, UserProfile, UserProfileUpdate, CartListView, \
-    add_to_cart, HistoryListView, delete_from_cart
+    add_to_cart, HistoryListView, delete_from_cart, HistoryDetailView
 
 app_name = UsersConfig.name
 
@@ -21,4 +21,5 @@ urlpatterns = [
     path('delete_from_cart/', delete_from_cart, name='delete_from_cart'),
 
     path('history/', HistoryListView.as_view(), name='history'),
+    path('history/detail/<int:pk>/', HistoryDetailView.as_view(), name='history_detail'),
 ]

@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -120,6 +122,7 @@ class CartListView(LoginRequiredMixin, ListView):
         return context_data
 
 
+@login_required
 def add_to_cart(request):
     """Добавляет анализ или прием в корзину."""
 
@@ -168,3 +171,27 @@ class HistoryListView(LoginRequiredMixin, ListView):
             context_data['object_list'] = object_list
             return context_data
         return context_data
+
+
+class HistoryDetailView(LoginRequiredMixin, DetailView):
+    """Контроллер для отображения объекта модели History."""
+    model = History
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        user = self.request.user
+
+        if user.groups.filter(name='user').exists():
+            if user == self.object.owner:
+                self.object.save()
+                return self.object
+            raise PermissionDenied
+
+        self.object.save()
+        return self.object
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'История'
+        return context_data
+
