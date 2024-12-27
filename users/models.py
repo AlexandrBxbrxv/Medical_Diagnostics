@@ -53,13 +53,14 @@ class History(models.Model):
     """Модель истории для записи всех оплаченных услуг и результатов."""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='histories_owner',
                               verbose_name='владелец')
-    analysis = models.ForeignKey(Analysis, on_delete=models.CASCADE, **NULLABLE, related_name='histories_analysis',
-                                 verbose_name='анализ')
-    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, **NULLABLE,
-                                    related_name='histories_appointment', verbose_name='прием')
-    result = models.ForeignKey(Result, on_delete=models.CASCADE, **NULLABLE, related_name='histories_result',
+    payment_daytime = models.DateTimeField(auto_now=True, verbose_name='дата и время оплаты')
+    service_info = models.TextField(**NULLABLE, verbose_name='информация об услуге')
+    price = models.PositiveIntegerField(default=0, verbose_name='цена')
+
+    result = models.ForeignKey(Result, on_delete=models.SET_NULL, **NULLABLE, related_name='histories_result',
                                verbose_name='результат')
 
     class Meta:
         verbose_name = 'история'
         verbose_name_plural = 'истории'
+        ordering = ('-payment_daytime',)

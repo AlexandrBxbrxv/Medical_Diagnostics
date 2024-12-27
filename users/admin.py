@@ -38,7 +38,7 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(History)
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'analysis', 'appointment', 'result',)
-    search_fields = ('analysis', 'appointment', 'result',)
-    ordering = ('id',)
+    list_display = ('id', 'owner', 'payment_daytime', 'price', 'result',)
+    search_fields = ('service_info', 'result',)
+    ordering = ('id', 'payment_daytime', 'price',)
     list_filter = ('owner',)
