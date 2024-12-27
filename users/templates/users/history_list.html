@@ -11,11 +11,12 @@
           <div class="row">
             <div class="col-10">
               <h5 class="mb-1">
-                {% if object.analysis %}
-                <a href="{% url 'services:analysis_detail' object.analysis.pk %}">{{ object.analysis.title|truncatechars:85 }}</a>
-                {% endif %}
-                {% if object.appointment %}
-                <a href="{% url 'services:appointment_detail' object.appointment.pk %}">{{ object.appointment.title|truncatechars:85 }}</a>
+                {{ object.payment_daytime }} <a class="btn btn-info" href="{% url 'users:history_detail' object.pk %}">Подробнее</a> <br>
+                {{ object.service_info|truncatechars:85 }}<br>
+                {% if object.result %}
+                <a href="{% url 'services:result_detail' object.result.pk %}">{{ object.result.title|truncatechars:85 }}</a>
+                {% else %}
+                Результат ещё не готов
                 {% endif %}
               </h5>
               <p class="mb-1">
@@ -29,13 +30,7 @@
                      style="position: absolute; left: 83%; top: 0; bottom: 0; width: 1px; background-color: #ccc;"></div>
 
                 <div class="d-flex w-100 justify-content-between">
-                  {% if object.analysis %}
-                  <h4 class="mb-1">{{ object.analysis.price }} ₽</h4>
-                {% endif %}
-                {% if object.appointment %}
-                  <h4 class="mb-1">{{ object.appointment.price }} ₽</h4>
-                {% endif %}
-                  <h4><a href="#" class="btn btn-danger">-</a></h4>
+                  <h4 class="mb-1">{{ object.price }} ₽</h4>
                 </div>
 
               </div>
