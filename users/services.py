@@ -2,6 +2,8 @@ import secrets
 
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
+from services.models import Analysis, Appointment
+from users.models import User, History
 
 
 def send_email_verification(self, user):
@@ -22,4 +24,18 @@ def send_email_verification(self, user):
         message=msg,
         from_email=EMAIL_HOST_USER,
         recipient_list=[user.email],
+    )
+
+
+def convert_analysis_to_history(user: User, analysis: Analysis):
+    """Создает объект модели History и записывает в него информацию из объекта Analysis."""
+
+    message = (f"Наименование: {analysis.title}\n"
+               f"Врач: {analysis.doctor}\n"
+               f"Описание: {analysis.description}")
+
+    History.objects.create(
+        owner=user,
+        service_info=message,
+        price=analysis.price
     )

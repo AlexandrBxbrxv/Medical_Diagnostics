@@ -2,30 +2,22 @@
 {% load custom_tags %}
 
 {% block content %}
-{% if perms.services.add_analysis %}
-<div class="container p-0">
-  <a class="btn btn-primary" href="{% url 'services:analysis_create' %}">Добавить Анализ</a>
-</div>
-{% endif %}
-<div class="container mt-3 p-0">
+<div class="container mt-3">
   <div class="row">
-    <div class="col-3">
-      <div class="h-100">
-        <div class="card p-1">
-          <p>Разделы</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-9">
-      {% for object in object_list %}
-      <div class="list-group">
+    {% for object in object_list %}
+      <div class="list-group p-0">
 
         <div class="list-group-item mb-2" style="min-height: 120px">
           <div class="row">
             <div class="col-10">
               <h5 class="mb-1">
-                <a href="{% url 'services:analysis_detail' object.pk %}">{{ object.title|truncatechars:85 }}</a>
+                {{ object.payment_daytime }} <a class="btn btn-info" href="{% url 'users:history_detail' object.pk %}">Подробнее</a> <br>
+                {{ object.service_info|truncatechars:85 }}<br>
+                {% if object.result %}
+                <a href="{% url 'services:result_detail' object.result.pk %}">{{ object.result.title|truncatechars:85 }}</a>
+                {% else %}
+                Результат ещё не готов
+                {% endif %}
               </h5>
               <p class="mb-1">
                 {{ object.description|truncatechars:250 }}<br>
@@ -39,7 +31,6 @@
 
                 <div class="d-flex w-100 justify-content-between">
                   <h4 class="mb-1">{{ object.price }} ₽</h4>
-                    <h4><button onclick="add_to_cart({{ object.pk }})" class="btn btn-info">+</button></h4>
                 </div>
 
               </div>
@@ -47,20 +38,9 @@
 
           </div>
         </div>
+
       </div>
       {% endfor %}
-    </div>
-
   </div>
 </div>
-
-<script>
-  function add_to_cart(id) {
-        fetch("{% url 'users:add_to_cart' %}?type=analysis&id="+id, {method: 'GET',}).then(response => {
-        });
-    }
-</script>
-
-
 {% endblock %}
-

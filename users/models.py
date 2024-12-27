@@ -39,10 +39,10 @@ class Cart(models.Model):
     """Модель корзины для набора анализов и приемов для последующей оплаты."""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='carts_owner',
                               verbose_name='владелец')
-    analyses = models.ManyToManyField(Analysis, related_name='carts_analyses', verbose_name='анализы')
-    appointments = models.ManyToManyField(Appointment, related_name='carts_appointments',
-                                          verbose_name='записи на прием')
-    summ = models.PositiveIntegerField(default=0, verbose_name='сумма к оплате')
+    analysis = models.ForeignKey(Analysis, on_delete=models.CASCADE, **NULLABLE, related_name='carts_analysis',
+                                 verbose_name='анализ')
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, **NULLABLE,
+                                    related_name='carts_appointment', verbose_name='прием')
 
     class Meta:
         verbose_name = 'козина'
@@ -53,11 +53,14 @@ class History(models.Model):
     """Модель истории для записи всех оплаченных услуг и результатов."""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='histories_owner',
                               verbose_name='владелец')
-    analyses = models.ManyToManyField(Analysis, related_name='histories_analyses', verbose_name='анализы')
-    appointments = models.ManyToManyField(Appointment, related_name='histories_appointments',
-                                          verbose_name='записи на прием')
-    results = models.ManyToManyField(Result, related_name='histories_results', verbose_name='результаты')
+    payment_daytime = models.DateTimeField(auto_now=True, verbose_name='дата и время оплаты')
+    service_info = models.TextField(**NULLABLE, verbose_name='информация об услуге')
+    price = models.PositiveIntegerField(default=0, verbose_name='цена')
+
+    result = models.ForeignKey(Result, on_delete=models.SET_NULL, **NULLABLE, related_name='histories_result',
+                               verbose_name='результат')
 
     class Meta:
         verbose_name = 'история'
         verbose_name_plural = 'истории'
+        ordering = ('-payment_daytime',)

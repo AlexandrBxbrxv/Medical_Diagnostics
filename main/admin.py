@@ -1,4 +1,5 @@
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.utils.translation import ngettext
 
 from main.models import Feedback
 
@@ -9,3 +10,19 @@ class FeedbackAdmin(admin.ModelAdmin):
     search_fields = ('fullname', 'email', 'message',)
     ordering = ('id', 'fullname',)
     list_filter = ('is_closed',)
+
+    actions = ['close_feedbacks']
+
+    @admin.action(description="Close selected feedbacks")
+    def close_feedbacks(self, request, queryset):
+        updated = queryset.update(is_closed=True)
+        self.message_user(
+            request,
+            ngettext(
+                "%d feedback closed",
+                "%d feedbacks closed",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )

@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+
+    <h6>Дата и время оплаты</h6>
+    {{ object.payment_daytime }}
+    <hr>
+    <h6>Информация о приеме</h6>
+    {{ object.service_info }}
+    <hr>
+    <h6>Информация о результате</h6>
+    {% if object.result %}
+    {{ object.result.title }}<br>
+    {{ object.result.message }}
+    {% else %}
+    Результат ещё не готов
+    {% endif %}
+    <hr>
+    <h6>Стоимость</h6>
+    {{ object.price }} ₽
+
+
+  </div>
+{% endblock %}
