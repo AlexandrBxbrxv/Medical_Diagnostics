@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
 from services.models import Doctor, Appointment, Analysis, Result
-from users.models import User
+from users.models import User, Cart, History
 
 
 def create_groups_for_test() -> tuple:
@@ -232,3 +232,49 @@ def create_results_for_tests(medical_staff: User, other_medical_staff: User) -> 
     )
 
     return result, others_result
+
+
+def create_carts_for_tests(user: User, other_user: User) -> tuple:
+    """Создает 2 объекта модели Cart от разных пользователей. Возвращает: cart, others_cart"""
+    analysis = Analysis.objects.create(
+        owner=user,
+        title='test',
+        description='test',
+        preparation='test',
+        treatment_room=1,
+        price=1
+    )
+
+    others_analysis = Analysis.objects.create(
+        owner=other_user,
+        title='test',
+        description='test',
+        preparation='test',
+        treatment_room=1,
+        price=1
+    )
+
+    cart = Cart.objects.create(
+        owner=user,
+        analysis=analysis
+    )
+
+    others_cart = Cart.objects.create(
+        owner=other_user,
+        analysis=others_analysis
+    )
+
+    return cart, others_cart
+
+
+def create_histories_for_tests(user: User, other_user: User) -> tuple:
+    """Создает 2 объекта модели History от разных пользователей. Возвращает: history, others_history"""
+    history = History.objects.create(
+        owner=user
+    )
+
+    others_history = History.objects.create(
+        owner=other_user
+    )
+
+    return history, others_history
