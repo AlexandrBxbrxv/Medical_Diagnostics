@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
   <div class="col-6">
-    <h4>О компании</h4>
+    <h5>О компании</h5>
     <p>
       Мы занимаемся диагностикой заболеваний уже много лет. У нас множество офисов по всей России. Lorem ipsum dolor sit
       amet, consectetur adipiscing elit. Morbi fringilla cursus lobortis. Morbi tristique dui neque, eget condimentum
@@ -14,7 +14,7 @@
       Pellentesque viverra purus ut eros tristique convallis. Phasellus efficitur dui scelerisque pretium porttitor.
     </p>
     <hr>
-    <h4>Услуги</h4>
+    <h5>Услуги</h5>
     <p>
       Сдать анализы<br>
       Записаться на прием
@@ -22,7 +22,7 @@
   </div>
 
   <div class="col-6">
-    <h4>Контакты</h4>
+    <h5>Контакты</h5>
     <p>
       Москва: +7-777-777-77-77<br>
       Петербург: +7-777-777-77-77<br>
@@ -30,10 +30,26 @@
       Меж город: 7-77-77
     </p>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
-      Форма обратной связи
-    </button>
-    {% include 'main/includes/inc_feedback_form.html' %}
+    <form method="post" action="{% url 'main:feedback' %}">
+      <div class="card">
+
+        <div class="card-header">
+          <h5>Обратная связь</h5>
+        </div>
+
+        <div class="card-body">
+          {% csrf_token %}
+          <input type="text" class="form-control" id="fullname_id" name="fullname" placeholder="Ф.И.О.">
+          <input type="email" class="form-control mt-2" id="email_id" name="email" placeholder="Email">
+          <input type="text" class="form-control mt-2" id="message_id" name="message" placeholder="Сообщение">
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-info" type="submit">Отправить</button>
+        </div>
+
+      </div>
+    </form>
 
   </div>
 </div>
