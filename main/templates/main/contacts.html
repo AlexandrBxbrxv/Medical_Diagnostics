@@ -7,7 +7,7 @@
     <p>
       Свердловская область, Екатеринбург, ул. Тургенева 3
     </p>
-      </div>
+  </div>
 
   <div class="col-6">
     <h4>Контакты</h4>
@@ -23,10 +23,11 @@
 </div>
 <div class="row">
   <div class="col-6">
-    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A07d4fc8fc6db16f7872fe698adac69afa3791fc401db13b9cdad3e597f8ada4f&amp;width=600&amp;height=450&amp;lang=ru_RU&amp;scroll=true"></script>
+    <script type="text/javascript" charset="utf-8" async
+            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A07d4fc8fc6db16f7872fe698adac69afa3791fc401db13b9cdad3e597f8ada4f&amp;width=600&amp;height=450&amp;lang=ru_RU&amp;scroll=true"></script>
   </div>
   <div class="col-6">
-    <form method="post" action="{% url 'main:feedback' %}">
+    <form method="post" action="{% url 'main:feedback' %}?page=contacts">
       <div class="card">
 
         <div class="card-header">
@@ -46,6 +47,30 @@
 
       </div>
     </form>
+
+    {% if message %}
+    <div class="toast align-items-center text-bg-{{ status }} mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ message }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Закрыть"></button>
+      </div>
+    </div>
+    {% endif %}
+
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    const toastList = toastElList.map(function (toastEl) {
+      return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach(toast => toast.show())
+  });
+</script>
+
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import TemplateView
 
@@ -42,6 +43,9 @@ def feedback(request):
     """Для отправки обратной связи."""
 
     user = None
+    page = request.GET['page']
+    status = None
+    message = None
 
     if isinstance(request.user, User):
         user = request.user
@@ -58,5 +62,10 @@ def feedback(request):
             email=email,
             message=message
         )
+        status = 'success'
+        message = 'Ваше сообщение успешно отправлено.'
+    else:
+        status = 'danger'
+        message = 'Все поля должны быть заполнены.'
 
-    return HttpResponseRedirect(reverse('main:index'))
+    return render(request, f'main/{page}.html', {'status': status, 'message': message})

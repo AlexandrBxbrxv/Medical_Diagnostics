@@ -30,7 +30,7 @@
       Меж город: 7-77-77
     </p>
 
-    <form method="post" action="{% url 'main:feedback' %}">
+    <form method="post" action="{% url 'main:feedback' %}?page=index">
       <div class="card">
 
         <div class="card-header">
@@ -51,6 +51,29 @@
       </div>
     </form>
 
+    {% if message %}
+    <div class="toast align-items-center text-bg-{{ status }} mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ message }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Закрыть"></button>
+      </div>
+    </div>
+    {% endif %}
+
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    const toastList = toastElList.map(function (toastEl) {
+      return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach(toast => toast.show())
+  });
+</script>
+
 {% endblock %}
