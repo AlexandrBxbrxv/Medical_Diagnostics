@@ -5,11 +5,8 @@
   <div class="col-6">
     <h4>Адрес компании</h4>
     <p>
-      Город ... Улица ... дом ...
+      Свердловская область, Екатеринбург, ул. Тургенева 3
     </p>
-    <hr>
-    <h4>Карта проезда</h4>
-    <a href="https://www.google.com/maps/place/%D0%93%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F+%D0%BA%D0%BB%D0%B8%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F+%D0%B1%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D0%B0+%E2%84%9613+%D0%94%D0%97%D0%9C/@55.7183936,37.663914,16z/data=!4m10!1m2!2m1!1z0LzQvtGB0LrQstCwINCx0L7Qu9GM0L3QuNGG0Ys!3m6!1s0x46b54b293e08f3df:0xa2e90f18782267dd!8m2!3d55.7189623!4d37.6667557!15sCh3QvNC-0YHQutCy0LAg0LHQvtC70YzQvdC40YbRi1ofIh3QvNC-0YHQutCy0LAg0LHQvtC70YzQvdC40YbRi5IBCGhvc3BpdGFsmgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU5NTVVsWWVrRlJFQUXgAQD6AQUIkgEQMg!16s%2Fg%2F1vd74lby?hl=ru&entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoJLDEwMjExMjMzSAFQAw%3D%3D">Карта проезда</a>
   </div>
 
   <div class="col-6">
@@ -21,7 +18,16 @@
       Меж город: 7-77-77<br>
       Email: <a href="#">company@med.ru</a>
     </p>
-    <form>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <script type="text/javascript" charset="utf-8" async
+            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A07d4fc8fc6db16f7872fe698adac69afa3791fc401db13b9cdad3e597f8ada4f&amp;width=600&amp;height=450&amp;lang=ru_RU&amp;scroll=true"></script>
+  </div>
+  <div class="col-6">
+    <form method="post" action="{% url 'main:feedback' %}?page=contacts">
       <div class="card">
 
         <div class="card-header">
@@ -29,9 +35,10 @@
         </div>
 
         <div class="card-body">
-          <input type="text" class="form-control" id="user_name_id" placeholder="Ф.И.О.">
-          <input type="email" class="form-control mt-2" id="user_email_id" placeholder="Email">
-          <input type="text" class="form-control mt-2" id="user_message_id" placeholder="Сообщение">
+          {% csrf_token %}
+          <input type="text" class="form-control" id="fullname_id" name="fullname" placeholder="Ф.И.О.">
+          <input type="email" class="form-control mt-2" id="email_id" name="email" placeholder="Email">
+          <input type="text" class="form-control mt-2" id="message_id" name="message" placeholder="Сообщение">
         </div>
 
         <div class="card-footer">
@@ -40,6 +47,30 @@
 
       </div>
     </form>
+
+    {% if message %}
+    <div class="toast align-items-center text-bg-{{ status }} mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ message }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Закрыть"></button>
+      </div>
+    </div>
+    {% endif %}
+
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    const toastList = toastElList.map(function (toastEl) {
+      return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach(toast => toast.show())
+  });
+</script>
+
 {% endblock %}
