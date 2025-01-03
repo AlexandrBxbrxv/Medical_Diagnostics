@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
 from django.views.generic import TemplateView
 
 from main.models import Feedback

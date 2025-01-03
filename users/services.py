@@ -2,7 +2,7 @@ import secrets
 
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
-from services.models import Analysis, Appointment
+from services.models import Analysis
 from users.models import User, History
 
 

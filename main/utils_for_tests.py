@@ -103,7 +103,7 @@ def create_groups_for_test() -> tuple:
         codename='delete_result',
         content_type=content_type_result,
     )
-    
+
     medical_staff_group.permissions.add(add_doctor, view_doctor, change_doctor, delete_doctor)
     medical_staff_group.permissions.add(add_appointment, view_appointment, change_appointment, delete_appointment)
     medical_staff_group.permissions.add(add_analysis, view_analysis, change_analysis, delete_analysis)

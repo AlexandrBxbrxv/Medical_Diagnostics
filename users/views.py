@@ -194,4 +194,3 @@ class HistoryDetailView(LoginRequiredMixin, DetailView):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'История'
         return context_data
-
