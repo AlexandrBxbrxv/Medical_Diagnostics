@@ -56,6 +56,13 @@
 
 <script>
   function add_to_cart(id) {
+        const isAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
+
+        if (!isAuthenticated) {
+          window.location.href = "{% url 'users:login' %}";
+          return;
+        }
+
         fetch("{% url 'users:add_to_cart' %}?type=analysis&id="+id, {method: 'GET',}).then(response => {
         });
     }
