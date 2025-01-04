@@ -21,10 +21,12 @@
 ###### DevLog
 
 _v0.8_
-1. Настройка Docker и docker-compose.yaml
-2. Настройка env проекта на работу с контейнерами
-3. Настройка для работы с GitLab deploy pipline
-4. Правки PEP8
+1. Установлены requests, gunicorn
+2. Настройка Docker и docker-compose.yaml
+3. Настройка env проекта на работу с контейнерами
+4. Настройка для работы с GitLab deploy pipline
+5. Добавлена модель Request
+6. Добавлена возможность записи на прием
 
 _v0.7_
 1. Тесты для контроллеров Cart
