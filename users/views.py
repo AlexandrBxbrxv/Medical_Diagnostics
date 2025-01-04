@@ -9,8 +9,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 
 from services.models import Analysis, Appointment
-from users.forms import UserLoginForm, UserRegisterForm, UserProfileUpdateForm
-from users.models import User, Cart, History
+from users.forms import UserLoginForm, UserRegisterForm, UserProfileUpdateForm, RequestModelForm
+from users.models import User, Cart, History, Request
 from users.services import send_email_verification
 
 
@@ -193,4 +193,29 @@ class HistoryDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'История'
+        return context_data
+
+
+# Контроллеры относящиеся к модели Request ##########################
+class RequestCreateView(LoginRequiredMixin, CreateView):
+    """Контроллер для создания объекта модели Request."""
+    model = Request
+    form_class = RequestModelForm
+    success_url = reverse_lazy('users:profile')
+
+    def form_valid(self, form):
+        user = self.request.user
+        request_obj = form.save()
+
+        request_obj.owner = user
+        request_obj.fullname = user.fullname
+        request_obj.phone_number = user.phone_number
+        request_obj.email = user.email
+
+        request_obj.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Запись на прием'
         return context_data
