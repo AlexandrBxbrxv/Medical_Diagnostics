@@ -1029,7 +1029,7 @@ class PermissionsForAnalysisTestCase(TestCase):
             response.status_code,
             403
         )
-        
+
 
 class ResultTestCase(TestCase):
     """Тестирование работоспособности контроллеров модели Result."""

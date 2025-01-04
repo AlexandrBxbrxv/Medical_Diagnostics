@@ -1,6 +1,4 @@
-from django.forms import BooleanField, ModelForm
-
-from main.models import Feedback
+from django.forms import BooleanField
 
 
 class StyleFormMixin:

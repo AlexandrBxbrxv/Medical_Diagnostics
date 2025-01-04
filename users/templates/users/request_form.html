@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<p>
+  Вы можете оформить заявку на платный прием и диагностику на сайте через форму, приведенную ниже.
+</p>
+<hr>
+<div class="row">
+  <div class="col-3">
+    <h6>ПРИЕМ ЗАЯВОК ПО ГРАФИКУ</h6>
+    <table class="table table-bordered">
+      <tbody>
+      <tr>
+        <td scope="col">ПН-ПТ</td>
+        <td scope="col">08:00-18:00</td>
+      </tr>
+      <tr>
+        <td scope="col">Суббота</td>
+        <td scope="col">09:00-14:00</td>
+      </tr>
+      <tr>
+        <td scope="col">Воскресенье</td>
+        <td scope="col">Выходной</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-9">
+    <p>
+      После оформления заявки с вами свяжется оператор, согласует день и время приема;<br>
+      Заявки, оформленные внерабочее время, обрабатываются на следующий рабочий день в порядке очереди;<br>
+      Если в списке нет нужного вам специалиста, то запись к нему осуществляется по тел. 8 (343) 351-76-05;<br>
+      Отказаться от приема можно, выбрав в форме онлайн-записи пункт "отменить прием" или позвонив по телефону 8 (343)
+      351-76-05.
+    </p>
+  </div>
+</div>
+
+<div class="container col-6">
+  <div class="card mt-2">
+    <div class="card-header">
+      <h5 class="text-center">Заявка на запись</h5>
+    </div>
+    <form method="post">
+      <div class="card-body">
+        {% csrf_token %}
+        {{ form.as_p }}
+      </div>
+      <div class="card-footer">
+        <div class="row col-12">
+          <div class="col-6 p-1">
+            <button class="btn btn-outline-success col-12">Отправить</button>
+          </div>
+          <div class="col-6 p-1">
+            <a class="btn btn-outline-secondary col-12" href="{% url 'users:profile' %}">Личный кабинет</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

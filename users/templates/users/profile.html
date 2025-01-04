@@ -1,14 +1,25 @@
 {% extends 'main/base.html' %}
+{% load custom_tags %}
+
 {% block content %}
 <div class="container col-6">
-  <div class="card mt-5">
+<a class="btn btn-outline-info col-12" href="{% url 'users:request_create' %}">Записаться на прием</a>
+  <div class="card mt-3">
     {% if object.fullname %}
     <div class="card-header">
       <h4>{{ object.fullname }}</h4>
     </div>
     {% endif %}
     <div class="card-body">
-      {{ object.email }}
+      <div class="row">
+        <div class="col-4">
+          <img src="{{ object.avatar | media_filter }}" style="width: 12rem; height: 12rem;" border="1px solid #555">
+        </div>
+        <div class=" col-8">
+          Почта: {{ object.email }}<br>
+          Телефон: {{ object.phone_number }}
+        </div>
+      </div>
     </div>
     <div class="card-footer">
       <div class="row col-12">
