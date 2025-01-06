@@ -1,3 +1,11 @@
+<style>
+  .dropdown-item:hover {
+    background-color: #b6d4fe;
+    color: #000;
+    transition: 0.3s;
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'main:index' %}">Главная</a>
@@ -33,7 +41,7 @@
           <ul class="dropdown-menu dropdown-menu-end">
             {% if user.is_authenticated %}
             {% if user.is_superuser %}
-            <li><a class="dropdown-item" href="http://127.0.0.1:8000/admin/">Админка</a></li>
+            <li><a class="dropdown-item" href="/admin/">Админка</a></li>
             {% endif %}
             <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
             <li><a class="dropdown-item" href="{% url 'users:history' %}">История</a></li>
