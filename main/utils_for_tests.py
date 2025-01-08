@@ -179,16 +179,34 @@ def create_doctors_for_tests(medical_staff: User, other_medical_staff: User) -> 
 
 def create_appointments_for_tests(medical_staff: User, other_medical_staff: User) -> tuple:
     """Создает 2 объекта модели Appointment от разных пользователей. Возвращает: appointment, others_appointment"""
+    doctor = Doctor.objects.create(
+        owner=medical_staff,
+        fullname='test',
+        speciality='test',
+        education='test',
+        experience=1
+    )
+
+    others_doctor = Doctor.objects.create(
+        owner=other_medical_staff,
+        fullname='test',
+        speciality='test',
+        education='test',
+        experience=1
+    )
+
     appointment = Appointment.objects.create(
         owner=medical_staff,
         title='test',
-        treatment_room=1
+        treatment_room=1,
+        doctor=doctor
     )
 
     others_appointment = Appointment.objects.create(
         owner=other_medical_staff,
         title='test',
-        treatment_room=1
+        treatment_room=1,
+        doctor=others_doctor
     )
 
     return appointment, others_appointment
