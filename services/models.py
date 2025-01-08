@@ -47,6 +47,33 @@ class Appointment(models.Model):
         verbose_name_plural = 'приемы'
 
 
+class UsersAppointment(models.Model):
+    """Модель записи на прием пользователя, пользователь выбирает какие услуги будут на приеме,
+     после создания объект отправляется в корзину."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='users_appointments_owner',
+                              verbose_name='владелец')
+    title = models.CharField(max_length=200, verbose_name='название')
+
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, **NULLABLE, related_name='users_appointments_doctor',
+                               verbose_name='врач')
+
+    date_time = models.DateTimeField(**NULLABLE, verbose_name='дата и время приема')
+
+    service_id = models.PositiveIntegerField(**NULLABLE, verbose_name='id услуги')
+
+    def __str__(self):
+        return self.title
+
+    def get_service(self):
+        pk = self.service_id
+        service = Service.objects.get(pk=pk)
+        return service
+
+    class Meta:
+        verbose_name = 'пользовательский прием'
+        verbose_name_plural = 'пользовательские приемы'
+
+
 class Service(models.Model):
     """Модель услуги на приеме."""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='services_owner',

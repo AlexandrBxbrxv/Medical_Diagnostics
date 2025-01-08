@@ -30,9 +30,16 @@ class UserProfileUpdateForm(StyleFormMixin, UserChangeForm):
         self.fields['password'].widget = forms.HiddenInput()
 
 
+class RequestDateInput(forms.DateInput):
+    input_type = 'date'
+
+
 class RequestModelForm(StyleFormMixin, ModelForm):
     """Форма для создания/редактирования объекта модели Request."""
 
     class Meta:
         model = Request
         exclude = ('owner', 'fullname', 'phone_number', 'email',)
+        widgets = {
+            'date': RequestDateInput(),
+        }
