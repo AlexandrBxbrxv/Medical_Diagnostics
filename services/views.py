@@ -147,6 +147,7 @@ class AppointmentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateV
 
 class AppointmentListView(ListView):
     """Контроллер для отображения списка объектов модели Appointment."""
+    paginate_by = 2
     model = Appointment
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -275,6 +276,7 @@ class AnalysisCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
 
 class AnalysisListView(ListView):
     """Контроллер для отображения списка объектов модели Analysis."""
+    paginate_by = 2
     model = Analysis
 
     def get_context_data(self, *, object_list=None, **kwargs):
