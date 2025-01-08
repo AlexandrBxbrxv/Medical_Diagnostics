@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load custom_tags %}
 
 {% block content %}
 {% if perms.services.add_doctor %}
@@ -8,6 +9,7 @@
 {% endif %}
 <div class="container mt-3 p-0">
   <div class="row">
+
     <div class="col-3">
       <div class="h-100">
         <div class="card">
@@ -19,32 +21,69 @@
     <div class="col-9">
       {% for object in object_list %}
       <div class="list-group">
-        <div class="list-group-item list-group-item-action">
+
+        <div class="list-group-item list-group-item-action mb-1">
           <div class="row">
-            <div class="col-10">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{ object.title }}</h5>
-                <small class="text-muted">3 дня назад</small>
-              </div>
-              <p class="mb-1">
-                {{ object.description }}<br>
-                {{ object.doctor }}
-              </p>
-              {{ object.services_appointment.first }}
+
+            <div class="col-2">
+              <img src="{{ object.avatar | media_filter }}" style="width: 8rem; height: 8rem;"
+                   border="1px solid #555"><br>
+              <h6>{{ object.doctor.fullname }}</h6>
+              <small>Стаж {{ object.doctor.experience|years_declination_filter }}</small>
+
             </div>
 
-            <div class="col-2 text-end">
-              <div class="d-flex justify-content-between align-items-center h-100">
-                <div class="vr"></div>
+            <div class="col-8">
+              <h5 class="mb-1">{{ object.title }}</h5>
+              Врач-{{ object.doctor.speciality|truncatechars:30 }}
 
-                <div class="ms-3">
-                  <h4>{{ object.services_appointment.first.price }} ₽</h4>
-                    <h4><button onclick="add_to_cart({{ object.pk }})" class="btn btn-info">+</button></h4>
+              <div class="accordion mt-2" id="accordionAppointment">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{ object.pk }}"
+                            aria-expanded="true" aria-controls="collapse{{ object.pk }}">
+                      Выберите услугу
+                    </button>
+                  </h2>
+                  <div id="collapse{{ object.pk }}" class="accordion-collapse collapse"
+                       data-bs-parent="#accordionAppointment">
+
+                    <div class="accordion-body">
+                      <div class="overflow-y-scroll" style="max-height: 200px">
+                        {% for service in object.services_appointment.all %}
+                        <div class="container w-100">
+                          <div class="form-check d-flex align-items-center w-100">
+                            <input class="form-check-input" type="radio" name="flexRadioService{{ object.pk }}"
+                                   id="flexRadioService{{ service.pk }}">
+                            <label class="form-check-label w-100 d-flex align-items-center"
+                                   for="flexRadioService{{ service.pk }}">
+                              <div class="card mb-1 ms-1 w-100" style="height: 40px">
+                                <div class="d-flex w-100 justify-content-between align-items-center h-100">
+                                  <h6 class="ms-2 mb-0">{{ service.title }}</h6>
+                                  <strong class="me-2 mb-0">{{ service.price }} ₽</strong>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
             </div>
 
-            <a class="btn btn-info" href="{% url 'services:appointment_detail' object.pk %}">Все услуги</a>
+            <div class="col-2 text-end">
+              <div class="d-flex justify-content-between h-100">
+                <div class="vr"></div>
+                <h4>
+                  <button class="btn btn-info" onclick="add_to_cart({{ object.pk }})">Записаться</button>
+                </h4>
+              </div>
+            </div>
 
           </div>
         </div>
@@ -56,17 +95,27 @@
 </div>
 
 <script>
-  function add_to_cart(id) {
-        const isAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
+  function add_to_cart(appointmentId) {
+      const isAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
 
-        if (!isAuthenticated) {
+      if (!isAuthenticated) {
           window.location.href = "{% url 'users:login' %}";
           return;
-        }
+      }
 
-        fetch("{% url 'users:add_to_cart' %}?type=appointment&id="+id, {method: 'GET',}).then(response => {
-        });
-    }
+      const selectedService = document.querySelector(`input[name="flexRadioService${appointmentId}"]:checked`);
+
+      if (!selectedService) {
+          alert("Пожалуйста, выберите услугу для этого приема перед добавлением в корзину.");
+          return;
+      }
+
+      const serviceId = selectedService.id.replace('flexRadioService', '');
+
+      fetch("{% url 'users:add_to_cart' %}?type=appointment&appointment_id=" + appointmentId + "&service_id=" + serviceId, {
+          method: 'GET',}).then(response => {
+      });
+  }
 </script>
 
 {% endblock %}
