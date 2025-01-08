@@ -8,10 +8,10 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 
-from services.models import Analysis, Appointment
+from services.models import Analysis, Appointment, UsersAppointment
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileUpdateForm, RequestModelForm
 from users.models import User, Cart, History, Request
-from users.services import send_email_verification, convert_analysis_to_history
+from users.services import send_email_verification, convert_analysis_to_history, convert_users_appointment_to_history
 
 
 # Контроллеры относящиеся к модели User #############################
@@ -93,7 +93,11 @@ def get_cart_info(object_list):
 
     if object_list is not None:
         cart_count = len(object_list)
-        cart_sum = sum(obj.analysis.price + cart_sum or obj.appointmenp.price + cart_sum for obj in object_list)
+        for obj in object_list:
+            if obj.analysis:
+                cart_sum += obj.analysis.price
+            else:
+                cart_sum += obj.users_appointment.get_service().price
 
     return cart_count, cart_sum
 
@@ -128,23 +132,39 @@ def add_to_cart(request):
 
     user = request.user
     obj_class = request.GET['type']
-    pk = request.GET['id']
 
     if obj_class == 'analysis':
+        pk = request.GET['id']
+
         Cart.objects.create(
             owner=user,
             analysis=Analysis.objects.get(pk=pk)
         )
 
+        return HttpResponse(status=201)
+
     if obj_class == 'appointment':
-        Cart.objects.create(
+        pk = request.GET['appointment_id']
+        appointment = Appointment.objects.get(pk=pk)
+        service_id = {"service_id": request.GET['service_id']}
+
+        users_appointment = UsersAppointment.objects.create(
             owner=user,
-            appointment=Appointment.objects.get(pk=pk)
+            title=appointment.title,
+            doctor=appointment.doctor,
+            date_time=appointment.date_time,
+            service_id=service_id
         )
 
-    return HttpResponse(status=201)
+        Cart.objects.create(
+            owner=user,
+            users_appointment=users_appointment
+        )
+
+        return HttpResponse(status=201)
 
 
+@login_required
 def delete_from_cart(request):
     """Удаляет объекты из корзины."""
 
@@ -156,6 +176,7 @@ def delete_from_cart(request):
     return HttpResponse(status=204)
 
 
+@login_required
 def pay_cache(request):
     """Для оплаты наличными, просто переносит услуги из корзины в историю."""
 
@@ -165,6 +186,9 @@ def pay_cache(request):
     for cart in cart_list:
         if cart.analysis:
             convert_analysis_to_history(user, cart.analysis)
+            cart.delete()
+        else:
+            convert_users_appointment_to_history(user, cart.users_appointment)
             cart.delete()
 
     return HttpResponse(status=200)
