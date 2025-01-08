@@ -12,14 +12,14 @@
 
     <div class="col-3">
       <div class="h-100">
-        <div class="card">
+        <div class="card h-100 p-1">
           <p>Разделы</p>
         </div>
       </div>
     </div>
 
     <div class="col-9">
-      {% for object in object_list %}
+      {% for object in page_obj %}
       <div class="list-group">
 
         <div class="list-group-item list-group-item-action mb-1">
@@ -35,7 +35,7 @@
 
             <div class="col-8">
               <h5 class="mb-1">{{ object.title }}</h5>
-              Врач-{{ object.doctor.speciality|truncatechars:30 }}
+              Специальность: {{ object.doctor.speciality|truncatechars:30 }}
 
               <div class="accordion mt-2" id="accordionAppointment">
                 <div class="accordion-item">
@@ -90,6 +90,8 @@
       </div>
       {% endfor %}
     </div>
+
+    {% include 'main/includes/inc_paginator.html' %}
 
   </div>
 </div>
