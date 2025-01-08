@@ -57,6 +57,8 @@ def convert_users_appointment_to_history(user: User, users_appointment: UsersApp
         price=service.price
     )
 
+    users_appointment.delete()
+
 
 def convert_to_history(request):
     """Переводит содержимое корзин в историю."""
