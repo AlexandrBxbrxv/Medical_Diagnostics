@@ -47,4 +47,3 @@ class ResultAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     ordering = ('id', 'title',)
     list_filter = ('analysis', 'appointment',)
-
