@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from services.models import Analysis, Appointment, UsersAppointment
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileUpdateForm, RequestModelForm
 from users.models import User, Cart, History, Request
-from users.services import send_email_verification, convert_analysis_to_history, convert_users_appointment_to_history
+from users.services import send_email_verification, convert_to_history
 
 
 # Контроллеры относящиеся к модели User #############################
@@ -180,16 +180,7 @@ def delete_from_cart(request):
 def pay_cache(request):
     """Для оплаты наличными, просто переносит услуги из корзины в историю."""
 
-    user = request.user
-    cart_list = Cart.objects.filter(owner=user)
-
-    for cart in cart_list:
-        if cart.analysis:
-            convert_analysis_to_history(user, cart.analysis)
-            cart.delete()
-        else:
-            convert_users_appointment_to_history(user, cart.users_appointment)
-            cart.delete()
+    convert_to_history(request)
 
     return HttpResponse(status=200)
 
