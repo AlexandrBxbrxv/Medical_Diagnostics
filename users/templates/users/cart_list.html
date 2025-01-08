@@ -53,17 +53,21 @@
       <div class="list-group-item mb-2" style="min-height: 75px">
         <div class="row">
           <div class="col-10">
-            <h5 class="mb-1">
               {% if object.analysis %}
-              <a href="{% url 'services:analysis_detail' object.analysis.pk %}">
-                {{ object.analysis.title|truncatechars:85 }}</a>
+                <div class="d-flex w-100 justify-content-between">
+                <h5>{{ object.analysis.title }}</h5>
+                <small class="text-muted">Анализ</small>
+              </div>
               {% endif %}
-              {% if object.appointment %}
-              <a href="{% url 'services:appointment_detail' object.appointment.pk %}">
-                {{ object.appointment.title|truncatechars:85 }}</a>
+              {% if object.users_appointment %}
+                <div class="d-flex w-100 justify-content-between">
+                  <div>
+                    <h5>{{ object.users_appointment.title }}</h5>
+                    {{ object.users_appointment.get_service }}
+                  </div>
+                <small class="text-muted">Прием</small>
+              </div>
               {% endif %}
-            </h5>
-
           </div>
 
           <div class="col-2 text-end">
@@ -75,8 +79,8 @@
                 {% if object.analysis %}
                 <h4 class="mb-1">{{ object.analysis.price }} ₽</h4>
                 {% endif %}
-                {% if object.appointment %}
-                <h4 class="mb-1">{{ object.appointment.price }} ₽</h4>
+                {% if object.users_appointment %}
+                <h4 class="mb-1">{{ object.users_appointment.get_service.price }} ₽</h4>
                 {% endif %}
                 <button class="btn btn-danger ps-4 pe-4" onclick="delete_from_cart({{ object.pk }})">
                   <h3>-</h3>
