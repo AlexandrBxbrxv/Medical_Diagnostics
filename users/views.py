@@ -146,7 +146,7 @@ def add_to_cart(request):
     if obj_class == 'appointment':
         pk = request.GET['appointment_id']
         appointment = Appointment.objects.get(pk=pk)
-        service_id = {"service_id": request.GET['service_id']}
+        service_id = request.GET['service_id']
 
         users_appointment = UsersAppointment.objects.create(
             owner=user,
