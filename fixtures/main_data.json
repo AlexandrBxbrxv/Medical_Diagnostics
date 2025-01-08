@@ -1,1 +1,254 @@
-[{"model": "main.feedback", "pk": 16, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "У вас класно!", "date_created": "2024-12-22", "is_closed": false}}, {"model": "main.feedback", "pk": 17, "fields": {"owner": null, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2024-12-22", "is_closed": false}}, {"model": "main.feedback", "pk": 18, "fields": {"owner": null, "fullname": "Фамилия Имя Отчество", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2024-12-22", "is_closed": false}}, {"model": "main.feedback", "pk": 19, "fields": {"owner": null, "fullname": "Простой Юзер", "email": "rixaya7932@degcos.com", "message": "У вас класно!", "date_created": "2024-12-22", "is_closed": true}}, {"model": "main.feedback", "pk": 20, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2024-12-22", "is_closed": true}}, {"model": "main.feedback", "pk": 21, "fields": {"owner": 1, "fullname": "", "email": "", "message": "", "date_created": "2024-12-22", "is_closed": true}}, {"model": "main.feedback", "pk": 22, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "У вас класcно!", "date_created": "2024-12-22", "is_closed": true}}, {"model": "main.feedback", "pk": 23, "fields": {"owner": 3, "fullname": "новый", "email": "g1026@bk.ru", "message": "У вас класно!", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 24, "fields": {"owner": 1, "fullname": "Простой Юзер", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 25, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 26, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 27, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "У вас класно!", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 28, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 29, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 30, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "jhfhfhjfv", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 31, "fields": {"owner": 1, "fullname": "Фамилия Имя Отчество", "email": "g1026@bk.ru", "message": "У вас класно!", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 32, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "У вас класно!", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 33, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "У вас класно!", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 34, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "ghh16@bk.ru", "message": "jhfhfhjfv", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 35, "fields": {"owner": 1, "fullname": "1", "email": "g1026@bk.ru", "message": "1", "date_created": "2025-01-03", "is_closed": false}}, {"model": "main.feedback", "pk": 36, "fields": {"owner": 1, "fullname": "Иван Иванович Иванов", "email": "g1026@bk.ru", "message": "У вас класно!", "date_created": "2025-01-03", "is_closed": false}}]
+[
+{
+  "model": "main.feedback",
+  "pk": 16,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "У вас класно!",
+    "date_created": "2024-12-22",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 17,
+  "fields": {
+    "owner": null,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2024-12-22",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 18,
+  "fields": {
+    "owner": null,
+    "fullname": "Фамилия Имя Отчество",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2024-12-22",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 19,
+  "fields": {
+    "owner": null,
+    "fullname": "Простой Юзер",
+    "email": "rixaya7932@degcos.com",
+    "message": "У вас класно!",
+    "date_created": "2024-12-22",
+    "is_closed": true
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 20,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2024-12-22",
+    "is_closed": true
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 21,
+  "fields": {
+    "owner": 1,
+    "fullname": "",
+    "email": "",
+    "message": "",
+    "date_created": "2024-12-22",
+    "is_closed": true
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 22,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "У вас класcно!",
+    "date_created": "2024-12-22",
+    "is_closed": true
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 23,
+  "fields": {
+    "owner": 3,
+    "fullname": "новый",
+    "email": "g1026@bk.ru",
+    "message": "У вас класно!",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 24,
+  "fields": {
+    "owner": 1,
+    "fullname": "Простой Юзер",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 25,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 26,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 27,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "У вас класно!",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 28,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 29,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 30,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 31,
+  "fields": {
+    "owner": 1,
+    "fullname": "Фамилия Имя Отчество",
+    "email": "g1026@bk.ru",
+    "message": "У вас класно!",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 32,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "У вас класно!",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 33,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "У вас класно!",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 34,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "ghh16@bk.ru",
+    "message": "jhfhfhjfv",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 35,
+  "fields": {
+    "owner": 1,
+    "fullname": "1",
+    "email": "g1026@bk.ru",
+    "message": "1",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+},
+{
+  "model": "main.feedback",
+  "pk": 36,
+  "fields": {
+    "owner": 1,
+    "fullname": "Иван Иванович Иванов",
+    "email": "g1026@bk.ru",
+    "message": "У вас класно!",
+    "date_created": "2025-01-03",
+    "is_closed": false
+  }
+}
+]
