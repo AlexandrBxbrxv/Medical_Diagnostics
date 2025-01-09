@@ -1,0 +1,29 @@
+[
+  {
+    "model": "users.cart",
+    "pk": 94,
+    "fields": {
+      "owner": 1,
+      "analysis": 3,
+      "users_appointment": null
+    }
+  },
+  {
+    "model": "users.cart",
+    "pk": 120,
+    "fields": {
+      "owner": 1,
+      "analysis": null,
+      "users_appointment": 3
+    }
+  },
+  {
+    "model": "users.cart",
+    "pk": 139,
+    "fields": {
+      "owner": 3,
+      "analysis": null,
+      "users_appointment": 11
+    }
+  }
+]

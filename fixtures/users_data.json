@@ -1,1 +1,199 @@
-[{"model": "users.user", "pk": 1, "fields": {"password": "pbkdf2_sha256$600000$AbLR82hGQMPS4l4XSCpBAN$D1MG+7230Vyvq+coUIuqv3mrM4du6BxNkqp4dZdlFuU=", "last_login": "2025-01-04T09:33:21.560Z", "is_superuser": true, "first_name": "", "last_name": "", "is_staff": true, "is_active": true, "date_joined": "2024-11-01T06:47:27Z", "email": "admin@bk.ru", "token": null, "fullname": "Важный Уж", "phone_number": "+71112223344", "avatar": "avatar_placeholder.jpg", "groups": [1], "user_permissions": []}}, {"model": "users.user", "pk": 3, "fields": {"password": "pbkdf2_sha256$600000$AbLR82hGQMPS4l4XSCpBAN$D1MG+7230Vyvq+coUIuqv3mrM4du6BxNkqp4dZdlFuU=", "last_login": "2025-01-04T10:26:28.207Z", "is_superuser": false, "first_name": "", "last_name": "", "is_staff": false, "is_active": true, "date_joined": "2024-12-24T09:46:16Z", "email": "g1026@bk.ru", "token": null, "fullname": "Бобров Александр Андреевич", "phone_number": "+71112223346", "avatar": "avatar_placeholder.jpg", "groups": [2], "user_permissions": []}}, {"model": "users.cart", "pk": 1, "fields": {"owner": 1, "analysis": 2, "appointment": null}}, {"model": "users.cart", "pk": 5, "fields": {"owner": 1, "analysis": 1, "appointment": null}}, {"model": "users.cart", "pk": 6, "fields": {"owner": 1, "analysis": 2, "appointment": null}}, {"model": "users.cart", "pk": 94, "fields": {"owner": 1, "analysis": 3, "appointment": null}}, {"model": "users.cart", "pk": 97, "fields": {"owner": 3, "analysis": 2, "appointment": null}}, {"model": "users.cart", "pk": 98, "fields": {"owner": 3, "analysis": 3, "appointment": null}}, {"model": "users.cart", "pk": 100, "fields": {"owner": 3, "analysis": 1, "appointment": null}}, {"model": "users.history", "pk": 1, "fields": {"owner": 1, "payment_daytime": "2024-12-27T10:43:09.370Z", "service_info": null, "price": 0, "result": null}}, {"model": "users.history", "pk": 2, "fields": {"owner": 1, "payment_daytime": "2024-12-27T10:43:09.370Z", "service_info": null, "price": 0, "result": null}}, {"model": "users.history", "pk": 3, "fields": {"owner": 3, "payment_daytime": "2024-12-27T13:06:53.983Z", "service_info": "test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test", "price": 1280, "result": null}}, {"model": "users.history", "pk": 4, "fields": {"owner": 3, "payment_daytime": "2025-01-03T05:05:35.523Z", "service_info": "Прием Хирурга\r\nУслуги\r\nУслуги", "price": 1600, "result": 1}}, {"model": "users.history", "pk": 5, "fields": {"owner": 3, "payment_daytime": "2025-01-04T10:37:41.699Z", "service_info": "Наименование: тест\nВрач: Петр Петров Петрович\nОписание: тест", "price": 2860, "result": null}}, {"model": "users.history", "pk": 6, "fields": {"owner": 3, "payment_daytime": "2024-12-28T20:54:27.846Z", "service_info": "Наименование: Общий анализ крови\nВрач: Иван Иванович Иванов филлер филлер филлер филлер филлер\nОписание: Вам руку проткнут и кровь высосут. тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест", "price": 6, "result": null}}, {"model": "users.history", "pk": 7, "fields": {"owner": 3, "payment_daytime": "2025-01-03T05:06:10.235Z", "service_info": "Наименование: тест тест тест тест тест тесттест тест тесттест тест тесттест тест тесттест тест тесттест тест тесттест тест тест тест тест тест тест тест тест тест тест тест тест\nВрач: Фамилия Имя Отчество\nОписание: тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест", "price": 3000, "result": null}}, {"model": "users.history", "pk": 8, "fields": {"owner": 3, "payment_daytime": "2025-01-03T05:06:05.206Z", "service_info": "Наименование: тест\nВрач: Петр Петров Петрович\nОписание: тест", "price": 2860, "result": null}}, {"model": "users.request", "pk": 1, "fields": {"owner": 3, "specialization": "therapist", "date": "2025-01-10", "from_time": "08_00", "to_time": "20_00", "fullname": "Бобров Александр Андреевич", "phone_number": "+71112223346", "email": "g1026@bk.ru", "comment": "test"}}]
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$AbLR82hGQMPS4l4XSCpBAN$D1MG+7230Vyvq+coUIuqv3mrM4du6BxNkqp4dZdlFuU=",
+      "last_login": "2025-01-08T16:20:12.561Z",
+      "is_superuser": true,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-11-01T06:47:27Z",
+      "email": "admin@bk.ru",
+      "token": null,
+      "fullname": "Важный Уж",
+      "phone_number": "+71112223344",
+      "avatar": "avatar_placeholder.jpg",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$AbLR82hGQMPS4l4XSCpBAN$D1MG+7230Vyvq+coUIuqv3mrM4du6BxNkqp4dZdlFuU=",
+      "last_login": "2025-01-07T09:02:49.332Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-12-24T09:46:16Z",
+      "email": "g1026@bk.ru",
+      "token": null,
+      "fullname": "Бобров Александр Андреевич",
+      "phone_number": "+71112223346",
+      "avatar": "avatar_placeholder.jpg",
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 1,
+    "fields": {
+      "owner": 1,
+      "payment_daytime": "2024-12-27T10:43:09.370Z",
+      "service_info": null,
+      "price": 0,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 2,
+    "fields": {
+      "owner": 1,
+      "payment_daytime": "2024-12-27T10:43:09.370Z",
+      "service_info": null,
+      "price": 0,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 31,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-07T09:03:43.667Z",
+      "service_info": "Наименование: Общий анализ крови\nВрач: Иван Иванович Иванов филлер филлер филлер филлер филлер\nОписание: Вам руку проткнут и кровь высосут. тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест",
+      "price": 6,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 32,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-07T09:03:43.675Z",
+      "service_info": "Наименование: тест\nВрач: Петр Петров Петрович\nОписание: тест",
+      "price": 2860,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 33,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-07T09:03:43.680Z",
+      "service_info": "Наименование: тест тест тест тест тест тесттест тест тесттест тест тесттест тест тесттест тест тесттест тест тесттест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тесттест те\nВрач: Фамилия Имя Отчество\nОписание: тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест",
+      "price": 3000,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 34,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-07T09:03:43.688Z",
+      "service_info": "Наименование: Прием Хирурга\nВрач: Иван Иванович Иванов\nУслуги на приеме: Рентген конечностей\nоблучится немного",
+      "price": 1890,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 35,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-07T09:04:10.195Z",
+      "service_info": "Наименование: Прием Хирурга\nВрач: Иван Иванович Иванов\nУслуги на приеме: Рентген туловисча\nоблучится хорошенько",
+      "price": 1460,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 36,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-08T06:59:55.783Z",
+      "service_info": "Наименование: тест\nВрач: Петр Петров Петрович\nОписание: тест",
+      "price": 2860,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 37,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-08T06:59:55.789Z",
+      "service_info": "Наименование: Общий анализ крови\nВрач: Иван Иванович Иванов филлер филлер филлер филлер филлер\nОписание: Вам руку проткнут и кровь высосут. тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест",
+      "price": 6,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 38,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-08T07:00:05.833Z",
+      "service_info": "Наименование: Прием Хирурга\nВрач: Иван Иванович Иванов\nУслуги на приеме: Рентген туловисча\nоблучится хорошенько",
+      "price": 1460,
+      "result": null
+    }
+  },
+  {
+    "model": "users.history",
+    "pk": 39,
+    "fields": {
+      "owner": 3,
+      "payment_daytime": "2025-01-08T06:59:55.804Z",
+      "service_info": "Наименование: Прием Хирурга\nВрач: Иван Иванович Иванов\nУслуги на приеме: Первичный прием хирурга\nосмотр",
+      "price": 2000,
+      "result": null
+    }
+  },
+  {
+    "model": "users.request",
+    "pk": 1,
+    "fields": {
+      "owner": 3,
+      "specialization": "therapist",
+      "date": "2025-01-10",
+      "from_time": "08_00",
+      "to_time": "20_00",
+      "fullname": "Бобров Александр Андреевич",
+      "phone_number": "+71112223346",
+      "email": "g1026@bk.ru",
+      "comment": "test"
+    }
+  },
+  {
+    "model": "users.request",
+    "pk": 3,
+    "fields": {
+      "owner": 3,
+      "specialization": "therapist",
+      "date": "2025-01-16",
+      "from_time": "08_00",
+      "to_time": "20_00",
+      "fullname": "Бобров Александр Андреевич",
+      "phone_number": "+71112223346",
+      "email": "g1026@bk.ru",
+      "comment": "help"
+    }
+  }
+]
