@@ -45,6 +45,7 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'прием'
         verbose_name_plural = 'приемы'
+        ordering = ('doctor',)
 
 
 class UsersAppointment(models.Model):
