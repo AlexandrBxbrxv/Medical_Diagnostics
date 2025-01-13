@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from services.forms import DoctorModelForm, AppointmentModelForm, AnalysisModelForm, ResultModelForm
-from services.models import Doctor, Appointment, Service, Analysis, Result
+from services.models import Doctor, Appointment, Service, Analysis, Result, Speciality
 
 
 # CRUD для модели Doctor ############################################
@@ -150,11 +150,19 @@ class AppointmentListView(ListView):
     paginate_by = 2
     model = Appointment
 
+    def get_queryset(self, **kwargs):
+        queryset = super().get_queryset(**kwargs)
+        speciality_pk = self.request.GET.get('speciality_pk')
+        if speciality_pk:
+            return queryset.filter(doctor__speciality=speciality_pk)
+        return queryset
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Список приемов'
 
         user = self.request.user
+        context_data['specialities'] = Speciality.objects.all()
         if user.groups.filter(name='medical_staff').exists():
             users_items = []
             for item in context_data.get('object_list'):
