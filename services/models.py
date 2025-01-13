@@ -6,12 +6,26 @@ from config.settings import AUTH_USER_MODEL
 User = AUTH_USER_MODEL
 
 
+class Speciality(models.Model):
+    """Модель специальность."""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='specialities_owner',
+                              verbose_name='владелец')
+    title = models.CharField(max_length=300, verbose_name='наименование')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'специальность'
+        verbose_name_plural = 'специальности'
+
+
 class Doctor(models.Model):
     """Модель врача, врач не является пользователем сайта."""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='doctors_owner',
                               verbose_name='владелец')
     fullname = models.CharField(max_length=150, verbose_name='Ф.И.О.')
-    speciality = models.CharField(max_length=200, verbose_name='специальность')
+    speciality = models.ForeignKey(Speciality, on_delete=models.SET_NULL, **NULLABLE, verbose_name='специальность')
     education = models.TextField(verbose_name='образование')
     information = models.TextField(**NULLABLE, verbose_name='общая информация')
     avatar = models.ImageField(upload_to='services/avatars', default='avatar_placeholder.jpg', **NULLABLE,
