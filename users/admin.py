@@ -46,7 +46,7 @@ class HistoryAdmin(admin.ModelAdmin):
 
 @admin.register(Request)
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'specialization', 'date', 'from_time', 'to_time', 'fullname', 'phone_number', 'email',)
-    search_fields = ('specialization', 'fullname',)
+    list_display = ('id', 'owner', 'speciality', 'date', 'from_time', 'to_time', 'fullname', 'phone_number', 'email',)
+    search_fields = ('speciality', 'fullname',)
     ordering = ('id', '-date',)
     list_filter = ('owner',)
