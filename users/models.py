@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
 from main.models import NULLABLE
-from services.models import Analysis, Result, UsersAppointment
+from services.models import Analysis, Result, UsersAppointment, Speciality
 
 phone_validation = RegexValidator(
     regex=r'^(?:\+7|8)\d{10}$',  # Проверка для российских номеров телефона
@@ -68,18 +68,6 @@ class History(models.Model):
 
 class Request(models.Model):
     """Модель для оставления заявки на прием."""
-    SPECIALIZATION_CHOICES = [
-        ('choose', 'Выберите специалиста'),
-        ('therapist', 'Терапевт'),
-        ('surgeon', 'Хирург'),
-        ('ultrasound', 'УЗИ'),
-        ('gastroenterologist', 'Гастроэнтеролог'),
-        ('dermatologist', 'Дерматолог'),
-        ('cardiologist', 'Кардиолог'),
-        ('otorhinolaryngologist', 'Оториноларинголог'),
-        ('neurologist', 'Невролог'),
-        ('urologist', 'Уролог'),
-    ]
 
     TIME_CHOICES = [
         ('08_30', '08:30'),
@@ -117,8 +105,8 @@ class Request(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, related_name='requests_owner',
                               verbose_name='владелец')
-    specialization = models.CharField(max_length=30, choices=SPECIALIZATION_CHOICES, default='choose',
-                                      verbose_name='специализация')
+    speciality = models.ForeignKey(Speciality, on_delete=models.SET_NULL, **NULLABLE,
+                                   related_name='requests_speciality', verbose_name='специализация')
     date = models.DateField(verbose_name='дата')
     from_time = models.CharField(max_length=5, choices=FROM_TIME_CHOICES, default='08_00', verbose_name='с')
     to_time = models.CharField(max_length=5, choices=TO_TIME_CHOICES, default='20_00', verbose_name='до')
