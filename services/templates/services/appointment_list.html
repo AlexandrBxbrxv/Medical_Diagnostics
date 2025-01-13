@@ -39,12 +39,10 @@
                    border="1px solid #555"><br>
               <h6>{{ object.doctor.fullname }}</h6>
               <small>Стаж {{ object.doctor.experience|years_declination_filter }}</small>
-
             </div>
 
             <div class="col-8">
-              <h5 class="mb-1">{{ object.title }}</h5>
-              Специальность: {{ object.doctor.speciality|truncatechars:30 }}
+              <h5 class="mb-1">{{ object.doctor.speciality }}</h5>
 
               <div class="accordion mt-2" id="accordionAppointment">
                 <div class="accordion-item">
