@@ -12,8 +12,11 @@
 
     <div class="col-3">
       <div class="h-100">
-        <div class="card h-100 p-1">
+        <div class="card p-1">
           <div class="row m-0 p-0">
+            <a class="btn btn-outline-info mb-1" href="{% url 'services:appointment_list' %}">
+              Все специальности
+            </a>
             {% for speciality in specialities %}
             <a class="btn btn-outline-info mb-1" href="?speciality_pk={{ speciality.pk }}">
               {{ speciality }}
